@@ -56,10 +56,7 @@ export const Navigation: React.FC<NavigationProps> = ({ scrolled, activeView, se
           onClick={() => setActiveView('chat')}
           className="flex items-center gap-2 text-lg font-bold tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
         >
-          <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-            <div className="w-2 h-2 bg-black rounded-full" />
-          </div>
-          {PROFILE.full_name}
+          {PROFILE.full_name} | Software Engineer
         </div>
 
         <div className="hidden md:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/5 backdrop-blur-md shadow-lg">
