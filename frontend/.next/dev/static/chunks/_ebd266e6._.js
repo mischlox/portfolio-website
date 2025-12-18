@@ -265,6 +265,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$terminal$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Terminal$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/terminal.js [app-client] (ecmascript) <export default as Terminal>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/Common/Data.ts [app-client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module '../hooks/useChatBot'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 ;
 var _s = __turbopack_context__.k.signature();
 ;
@@ -272,16 +277,12 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
 const ChatSection = ()=>{
     _s();
-    const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
-        {
-            role: 'ai',
-            text: `System initialized. I have loaded ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PROFILE"].first_name}'s professional vector embeddings. \n\nHow can I assist you today?`
-        }
-    ]);
-    const [input, setInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [isTyping, setIsTyping] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // --- USE THE HOOK TO GET ALL STATE AND HANDLERS ---
+    const { messages, input, isTyping, setInput, handleSend } = useChatBot();
+    // --------------------------------------------------
     const bottomRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ChatSection.useEffect": ()=>{
@@ -293,35 +294,7 @@ const ChatSection = ()=>{
         messages,
         isTyping
     ]);
-    const handleSend = (e)=>{
-        e.preventDefault();
-        if (!input.trim()) return;
-        setMessages((prev)=>[
-                ...prev,
-                {
-                    role: 'user',
-                    text: input
-                }
-            ]);
-        setInput('');
-        setIsTyping(true);
-        setTimeout(()=>{
-            const answers = [
-                `${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PROFILE"].first_name} builds RAG pipelines using LangChain and Pinecone. ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PROFILE"].first_name} recently optimized inference latency by 40% at TechNova.`,
-                `Yes, ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PROFILE"].first_name} is proficient in Python (FastAPI), TypeScript (Next.js), and Go for microservices.`,
-                `Currently, ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PROFILE"].first_name} is exploring Agentic Workflows and local LLM fine-tuning.`
-            ];
-            const random = answers[Math.floor(Math.random() * answers.length)];
-            setMessages((prev)=>[
-                    ...prev,
-                    {
-                        role: 'ai',
-                        text: random
-                    }
-                ]);
-            setIsTyping(false);
-        }, 1500);
-    };
+    // handleSend logic has been removed and is now inside useChatBot
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "flex flex-col h-[75vh] justify-center items-center",
         children: [
@@ -349,12 +322,12 @@ const ChatSection = ()=>{
                             className: "rounded-full mx-auto border-4 shadow-lg"
                         }, void 0, false, {
                             fileName: "[project]/components/Views/ChatSection.tsx",
-                            lineNumber: 54,
+                            lineNumber: 43,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 53,
+                        lineNumber: 42,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -365,7 +338,7 @@ const ChatSection = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 62,
+                        lineNumber: 51,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -373,7 +346,7 @@ const ChatSection = ()=>{
                         children: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Common$2f$Data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PROFILE"].role
                     }, void 0, false, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 65,
+                        lineNumber: 54,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -386,33 +359,33 @@ const ChatSection = ()=>{
                                         className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 59,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         className: "relative inline-flex rounded-full h-2 w-2 bg-green-500"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 71,
+                                        lineNumber: 60,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 69,
+                                lineNumber: 58,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             "Neural Interface Active"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 68,
+                        lineNumber: 57,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Views/ChatSection.tsx",
-                lineNumber: 47,
+                lineNumber: 36,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -429,27 +402,27 @@ const ChatSection = ()=>{
                                         className: "w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 85,
+                                        lineNumber: 74,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 86,
+                                        lineNumber: 75,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 87,
+                                        lineNumber: 76,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 84,
+                                lineNumber: 73,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -459,20 +432,20 @@ const ChatSection = ()=>{
                                         size: 10
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 90,
+                                        lineNumber: 79,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     " Portfolio Assistant"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 89,
+                                lineNumber: 78,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 83,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -495,12 +468,12 @@ const ChatSection = ()=>{
                                         children: m.text
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 103,
+                                        lineNumber: 92,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, i, false, {
                                     fileName: "[project]/components/Views/ChatSection.tsx",
-                                    lineNumber: 97,
+                                    lineNumber: 86,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))),
                             isTyping && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -518,45 +491,45 @@ const ChatSection = ()=>{
                                             className: "w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Views/ChatSection.tsx",
-                                            lineNumber: 116,
+                                            lineNumber: 105,
                                             columnNumber: 18
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-100"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Views/ChatSection.tsx",
-                                            lineNumber: 117,
+                                            lineNumber: 106,
                                             columnNumber: 18
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-200"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Views/ChatSection.tsx",
-                                            lineNumber: 118,
+                                            lineNumber: 107,
                                             columnNumber: 18
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/Views/ChatSection.tsx",
-                                    lineNumber: 115,
+                                    lineNumber: 104,
                                     columnNumber: 16
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 114,
+                                lineNumber: 103,
                                 columnNumber: 14
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 ref: bottomRef
                             }, void 0, false, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 122,
+                                lineNumber: 111,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 95,
+                        lineNumber: 84,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -572,12 +545,12 @@ const ChatSection = ()=>{
                                             size: 18
                                         }, void 0, false, {
                                             fileName: "[project]/components/Views/ChatSection.tsx",
-                                            lineNumber: 129,
+                                            lineNumber: 118,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 117,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -588,7 +561,7 @@ const ChatSection = ()=>{
                                         autoFocus: true
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 131,
+                                        lineNumber: 120,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -599,18 +572,18 @@ const ChatSection = ()=>{
                                             size: 20
                                         }, void 0, false, {
                                             fileName: "[project]/components/Views/ChatSection.tsx",
-                                            lineNumber: 143,
+                                            lineNumber: 132,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 138,
+                                        lineNumber: 127,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 127,
+                                lineNumber: 116,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -625,34 +598,38 @@ const ChatSection = ()=>{
                                         children: chip
                                     }, chip, false, {
                                         fileName: "[project]/components/Views/ChatSection.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 138,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)))
                             }, void 0, false, {
                                 fileName: "[project]/components/Views/ChatSection.tsx",
-                                lineNumber: 147,
+                                lineNumber: 136,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Views/ChatSection.tsx",
-                        lineNumber: 126,
+                        lineNumber: 115,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Views/ChatSection.tsx",
-                lineNumber: 78,
+                lineNumber: 67,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/components/Views/ChatSection.tsx",
-        lineNumber: 44,
+        lineNumber: 33,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(ChatSection, "zsc2U22nkmZZ2Fnnjz9FpSIbmEo=");
+_s(ChatSection, "RJBpZiPJnRdN81SvHyFSOfoYvoI=", false, function() {
+    return [
+        useChatBot
+    ];
+});
 _c = ChatSection;
 var _c;
 __turbopack_context__.k.register(_c, "ChatSection");

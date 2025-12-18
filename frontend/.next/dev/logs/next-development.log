@@ -1,2 +1,857 @@
-[00:00:00.739] Server  LOG      ✓ Ready in 532ms
-[00:00:09.953] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:00.719] Server  LOG      ✓ Ready in 512ms
+[00:00:05.627] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:51.691] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.693] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.694] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.695] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.697] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.698] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.699] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.700] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.702] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.703] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.704] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.706] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.707] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.708] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.709] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.710] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.712] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.713] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.714] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.715] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.718] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.720] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.721] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.723] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.724] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.725] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.726] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.727] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.729] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.730] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.731] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.732] Server  ERROR    ⨯ ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:02:51.733] Server  LOG      ✓ Compiled in 39ms
+[00:02:52.653] Browser ERROR   ./components/Views/ChatSection.tsx:10:1
+Module not found: Can't resolve '../hooks/useChatBot'
+   8 |
+   9 | // --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+> 10 | import { useChatBot, Message } from '../hooks/useChatBot'; 
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  11 | // ----------------------------------------------
+  12 |
+  13 | export const ChatSection: React.FC = () => {
+
+Import traces:
+  Client Component Browser:
+    ./components/Views/ChatSection.tsx [Client Component Browser]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/Views/ChatSection.tsx [Client Component SSR]
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found

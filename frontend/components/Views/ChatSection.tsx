@@ -6,39 +6,28 @@ import { ArrowUpRight, Sparkles, Terminal } from 'lucide-react';
 import Image from 'next/image';
 import { PROFILE } from '../Common/Data';
 
-type Message = { role: 'user' | 'ai'; text: string };
+// --- IMPORT THE NEW CUSTOM HOOK AND TYPES ---
+import { useChatBot, Message } from '../../hooks/useChatBot'; 
+// ----------------------------------------------
 
 export const ChatSection: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'ai', text: `System initialized. I have loaded ${PROFILE.first_name}'s professional vector embeddings. \n\nHow can I assist you today?` }
-  ]);
-  const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  // --- USE THE HOOK TO GET ALL STATE AND HANDLERS ---
+  const { 
+    messages, 
+    input, 
+    isTyping, 
+    setInput, 
+    handleSend 
+  } = useChatBot();
+  // --------------------------------------------------
+
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  const handleSend = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    setMessages(prev => [...prev, { role: 'user', text: input }]);
-    setInput('');
-    setIsTyping(true);
-
-    setTimeout(() => {
-      const answers = [
-         `${PROFILE.first_name} builds RAG pipelines using LangChain and Pinecone. ${PROFILE.first_name} recently optimized inference latency by 40% at TechNova.`,
-         `Yes, ${PROFILE.first_name} is proficient in Python (FastAPI), TypeScript (Next.js), and Go for microservices.`,
-         `Currently, ${PROFILE.first_name} is exploring Agentic Workflows and local LLM fine-tuning.`,
-      ];
-      const random = answers[Math.floor(Math.random() * answers.length)];
-      setMessages(prev => [...prev, { role: 'ai', text: random }]);
-      setIsTyping(false);
-    }, 1500);
-  };
+  // handleSend logic has been removed and is now inside useChatBot
 
   return (
     <div className="flex flex-col h-[75vh] justify-center items-center">
