@@ -67,10 +67,12 @@ export const PROFILE = {
       url: "" 
     },
   ],
-  skills: [
-    "C++", "Python", "ROS2", "PyTorch", "OpenCV", "TensorRT", "Linux", "Docker", "Git", "Embedded Systems",
-    "(3D) Computer Vision", "Deep Learning", "Agile Development"
-  ],
+  skills: {
+    "Programming Languages": ["C++", "Python", "TypeScript"],
+    "AI/ML & Vision": ["PyTorch", "Deep Learning", "(3D) Computer Vision", "OpenCV", "TensorRT"],
+    "Robotics & Embedded": ["ROS2", "Embedded Systems", "Linux", "Docker", "Buildroot"],
+    "Tools & Workflow": ["Git", "FastAPI", "Next.js", "Agile Development", "CMake"]
+  },
   social: {
     linkedin: "https://de.linkedin.com/in/michael-schlosser-dev",
     github: "https://github.com/mischlox",

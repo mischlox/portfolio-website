@@ -2,7 +2,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { View, PROFILE } from '@/components/Common/Data';
 
@@ -19,7 +19,7 @@ import { ContactSection } from '@/components/Views/ContactSection';
 export default function Portfolio() {
   const [activeView, setActiveView] = useState<View>('chat');
   const [scrolled, setScrolled] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); 
 
   // Handle scroll effect
   useEffect(() => {
@@ -37,20 +37,17 @@ export default function Portfolio() {
   return (
     <div 
       className="min-h-screen bg-[#050505] text-white font-sans selection:bg-blue-500/30 relative overflow-hidden"
-      onMouseMove={handleMouseMove}
+      onMouseMove={handleMouseMove} 
     >
-      
-      {/* --- SPOTLIGHT BACKGROUND EFFECT --- */}
+      <div 
+        className="animated-gradient-bg absolute inset-0 z-0 opacity-20" 
+      />
       <div 
         className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
         style={{
-          background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(29, 78, 216, 0.15), transparent 40%)`
+          background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(65, 105, 225, 0.10), transparent 40%)`
         }}
       />
-      {/* Grid Overlay */}
-      <div className="absolute inset-0 z-0 opacity-[0.15]" 
-           style={{ backgroundImage: 'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(to right, #ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-      </div>
 
       {/* --- NAVIGATION --- */}
       <Navigation 

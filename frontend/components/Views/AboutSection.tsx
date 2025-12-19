@@ -10,12 +10,14 @@ export const AboutSection: React.FC = () => {
   return (
     <div className="space-y-16 py-10">
       
+      {/* ... (Profile section remains the same) ... */}
       <section className="space-y-6">
+        {/* ... (Image, Heading, About text) ... */}
         <div className="mb-8">
             <Image
                 src="/profile-picture.jpg"
                 alt={PROFILE.full_name}
-                width={180} // Slightly larger for the dedicated profile section
+                width={180} 
                 height={180}
                 className="rounded-3xl border-2 border-white/10 shadow-xl"
             />
@@ -45,24 +47,40 @@ export const AboutSection: React.FC = () => {
         </div>
       </section>
 
-      {/* Tech Stack Grid */}
+      {/* Tech Stack Grid (Labels in Columns) */}
       <section>
         <h3 className="text-sm font-medium text-gray-500 uppercase tracking-widest mb-6">Technical Arsenal</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {PROFILE.skills.map((s, i) => (
-            <motion.div 
-              key={s}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="px-4 py-3 bg-[#0F0F0F] border border-white/5 rounded-xl text-sm text-gray-300 flex items-center justify-center hover:bg-white/5 hover:border-white/10 transition-all cursor-default hover:scale-105"
-            >
-              {s}
-            </motion.div>
+        
+        {/* Responsive Grid Container for Skill Columns */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6"> {/* Slightly reduced gap for tighter look */}
+          {Object.entries(PROFILE.skills).map(([category, skills]) => (
+            <div key={category} className="h-full flex flex-col"> {/* Removed background/border from the outer column div */}
+              
+              {/* Category Title */}
+              <h4 className="text-sm font-semibold text-white mb-4 pb-2 border-b border-white/10">{category}</h4>
+              
+              {/* Flex container for the labels, allowing wrap if necessary */}
+              <div className="flex flex-wrap gap-2"> 
+                {skills.map((s, i) => (
+                  <motion.div 
+                    key={s}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.05 }}
+                    // --- LABEL STYLES RE-APPLIED ---
+                    className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-300 transition-all cursor-default hover:bg-white/10"
+                    // -----------------------------
+                  >
+                    {s}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
+      {/* ... (Career History and Education sections remain the same) ... */}
       <div className="grid md:grid-cols-2 gap-12">
         <section>
           <h3 className="text-sm font-medium text-gray-500 uppercase tracking-widest mb-6">Career History</h3>
