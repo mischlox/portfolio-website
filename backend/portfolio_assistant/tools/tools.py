@@ -1,7 +1,9 @@
 # tools.py
 from typing import Optional
+import datetime
 from langchain_core.tools import tool
 from .rag import retriever
+from .db_manager import insert_unanswered_question
 
 @tool
 def retrieve_portfolio_info(query: str):
@@ -22,10 +24,19 @@ def send_email(user_email: str, message_body: str, subject: str = "Portfolio Inq
     return f"Email successfully sent from {user_email}. Subject: {subject}"
 
 @tool
-def log_unanswered_question(question: str, user_name: Optional[str] = "Anonymous"):
+def log_unanswered_question(question: str, user_name: str = "Anonymous"):
     """
-    Log an unanswered question about Michael Schlosser.
+    Log an unanswered question about Michael Schlosser to a database with a timestamp.
     """
-    # TODO: Logic to actually save question would go here
-    print(f"--- TOOL CALL: Logging Unanswered Question from {user_name}: {question} ---")
-    return f"Question logged: {question}"
+    timestamp = datetime.datetime.now().isoformat()
+    try:
+        log_message = insert_unanswered_question(question, user_name, timestamp)
+        
+        print(f"--- TOOL CALL: {log_message} ---")
+        return log_message
+
+    except RuntimeError as e:
+        error_message = f"Database ERROR logging question: {e}"
+        print(f"--- TOOL CALL: {error_message} ---")
+        return error_message
+    
