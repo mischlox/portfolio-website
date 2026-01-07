@@ -1,52 +1,66 @@
 # main.py
-from fastapi import FastAPI
+import os
+import uvicorn
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
-
-class Message(BaseModel):
-    role: str # 'user' or 'ai'
-    text: str
-
-class ChatRequest(BaseModel):
-    message: str
-    history: List[Message]
-    
-api = FastAPI(title="Portfolio Chat API", version="1.0")
-
 from fastapi.middleware.cors import CORSMiddleware
-origins = [
-    "http://localhost:3000",  # Your Next.js frontend default port
-]
-api.add_middleware(
+from contextlib import asynccontextmanager
+
+from assistant import PortfolioAssistant
+
+DEV_MODE = os.getenv("APP_ENV") == "dev"
+print(f"Server starting in: {'DEV (Ollama)' if DEV_MODE else 'PROD (OpenRouter)'} Mode")
+
+portfolio_assistant = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Initializes the assistant when the server starts.
+    This prevents re-initializing the LLM connection on every request.
+    """
+    global portfolio_assistant
+    portfolio_assistant = PortfolioAssistant(dev_mode=DEV_MODE)
+    yield
+    # Cleanup code (if needed) goes here
+    print("Shutting down Portfolio Assistant...")
+
+app = FastAPI(title="Portfolio Chat API", lifespan=lifespan)
+
+app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@api.get("/")
+class Message(BaseModel):
+    role: str
+    text: str
+
+class ChatRequest(BaseModel):
+    message: str
+    history: List[Message]
+
+@app.get("/")
 def read_root():
-    """Simple root check to confirm the API is running."""
-    return {"status": "ok", "message": "Chatbot API is operational."}
+    mode = "DEVELOPER (Local Ollama)" if DEV_MODE else "PRODUCTION (OpenRouter)"
+    return {"status": "ok", "mode": mode}
 
-
-@api.post("/chat")
+@app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
-    """Handles the chat request and returns a simple echo response."""
-    
-    user_message = request.message
-    
-    # --- Simplified Communication Test Logic ---
-    
-    if "hello" in user_message.lower():
-        response_text = "Hello! I see your frontend is successfully communicating with the FastAPI backend."
-    elif len(request.history) > 0:
-        response_text = "I received your message and history. The connection is working, but the RAG agent is not yet active."
-    else:
-        response_text = f"ECHO: You sent '{user_message}'. Connection established."
-        
-    # ------------------------------------------
+    if not portfolio_assistant:
+        raise HTTPException(status_code=500, detail="Assistant not initialized")
 
-    # Return the response structure expected by the frontend
+    # Pass the request to the assistant
+    response_text = await portfolio_assistant.chat(
+        user_input=request.message,
+        history=[m.dict() for m in request.history]
+    )
     return {"response": response_text}
+
+if __name__ == "__main__":
+    print(f"Starting Server. Dev Mode: {DEV_MODE}")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

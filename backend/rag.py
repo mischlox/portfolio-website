@@ -1,0 +1,146 @@
+# rag.py
+import os
+import time
+import json
+from dotenv import load_dotenv
+from langchain_chroma import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader
+from langchain_core.documents import Document
+
+load_dotenv()
+
+PERSIST_DIRECTORY = "./chroma_db"
+DATA_DIRECTORY = "./data"
+LAST_UPDATE_FILE = os.path.join(PERSIST_DIRECTORY, ".last_update")
+
+def should_rebuild_vectorstore():
+    """
+    Checks if any file in DATA_DIRECTORY has been modified since the last 
+    successful vector store creation, including .json sidecar files.
+    """
+    if not os.path.exists(LAST_UPDATE_FILE):
+        return True
+
+    with open(LAST_UPDATE_FILE, 'r') as f:
+        try:
+            last_build_time = float(f.read().strip())
+        except ValueError:
+            return True
+
+    if not os.path.exists(DATA_DIRECTORY):
+        return False
+
+    for root, _, files in os.walk(DATA_DIRECTORY):
+        for file in files:
+            file_path = os.path.join(root, file)
+            if file_path.endswith(('.md', '.txt', '.pdf', '.json')):
+                mod_time = os.path.getmtime(file_path)
+                if mod_time > last_build_time:
+                    print(f"--- RAG Check: File '{file}' is newer. Rebuilding. ---")
+                    return True
+    
+    return False
+
+def load_documents_with_metadata():
+    """
+    Loads all supported documents, and merges metadata from corresponding 
+    JSON sidecar files (e.g., file.pdf loads file.json).
+    """
+    docs = []
+    
+    if not os.path.exists(DATA_DIRECTORY) or not os.listdir(DATA_DIRECTORY):
+        print("--- RAG: No data directory or empty, loading samples. ---")
+        return [
+            Document(
+                page_content="Experienced **Software Engineer** (M.Sc.) specializing in **C++ and Python** in the fields of **Embedded Systems, Real-Time Applications, Computer Vision**, **Deep Learning** and **Sensor Fusion**. Profound knowledge in developing complex software components for the defense and automotive industries.", 
+                metadata={"document_type": "resume", "language": "en"}
+             )
+        ]
+        
+    print("--- RAG: Loading documents and merging sidecar metadata. ---")
+    
+    loaded_docs = []
+
+    # Load PDFs
+    # TODO: Needs to be improved. Retrieval results are not good
+    pdf_loader = DirectoryLoader(
+        DATA_DIRECTORY, 
+        glob="**/*.pdf", 
+        loader_cls=PyPDFLoader, 
+        recursive=True
+    )
+    loaded_docs.extend(pdf_loader.load())
+    
+    # Load Markdown/Text
+    text_loader = DirectoryLoader(
+        DATA_DIRECTORY, 
+        glob=["**/*.md", "**/*.txt"],
+        loader_cls=TextLoader, 
+        recursive=True
+    )
+    loaded_docs.extend(text_loader.load())
+
+    # Add sidecar metadata
+    for doc in loaded_docs:
+        source_path = doc.metadata.get("source")
+        
+        if source_path:
+            base, _ = os.path.splitext(source_path)
+            sidecar_path = base + ".json"
+            
+            if os.path.exists(sidecar_path):
+                if source_path.endswith(".json"): continue 
+
+                print(f"    - Found sidecar for: {os.path.basename(source_path)}")
+                try:
+                    with open(sidecar_path, 'r') as f:
+                        sidecar_metadata = json.load(f)
+                        doc.metadata.update(sidecar_metadata)
+                except json.JSONDecodeError:
+                    print(f"    - WARNING: Invalid JSON in {os.path.basename(sidecar_path)}. Skipping.")
+            
+            doc.metadata["source_filename"] = os.path.basename(source_path)
+            
+        docs.append(doc)
+
+    return docs
+
+def get_retriever():
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small", 
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.getenv("OPENROUTER_API_KEY")
+    )
+
+    should_rebuild = should_rebuild_vectorstore()
+    
+    if should_rebuild or not os.path.exists(PERSIST_DIRECTORY):
+        print("--- RAG: Creating new Vector Store (due to missing or updated files) ---")
+        
+        os.makedirs(PERSIST_DIRECTORY, exist_ok=True)
+        
+        docs = load_documents_with_metadata()
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+        splits = text_splitter.split_documents(docs)
+
+        vectorstore = Chroma.from_documents(
+            documents=splits,
+            embedding=embeddings,
+            persist_directory=PERSIST_DIRECTORY
+        )
+        
+        with open(LAST_UPDATE_FILE, 'w') as f:
+            f.write(str(time.time()))
+        
+    else:
+        print("--- RAG: Loading existing Vector Store (no changes detected) ---")
+        vectorstore = Chroma(
+            persist_directory=PERSIST_DIRECTORY, 
+            embedding_function=embeddings
+        )
+
+    return vectorstore.as_retriever(search_kwargs={"k": 3})
+
+retriever = get_retriever()
