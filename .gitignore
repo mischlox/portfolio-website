@@ -3,6 +3,7 @@
 # dependencies
 **/node_modules
 **/.pnp
+**/.next
 .pnp.js
 
 **/.venv/
@@ -16,6 +17,10 @@
 
 # production
 **/build
+**/__pycache__
+
+**/chroma_db
+**/data
 
 # misc
 .DS_Store
