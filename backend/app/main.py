@@ -7,7 +7,7 @@ from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from assistant import PortfolioAssistant
+from portfolio_assistant.core.assistant import PortfolioAssistant
 
 DEV_MODE = os.getenv("APP_ENV") == "dev"
 print(f"Server starting in: {'DEV (Ollama)' if DEV_MODE else 'PROD (OpenRouter)'} Mode")

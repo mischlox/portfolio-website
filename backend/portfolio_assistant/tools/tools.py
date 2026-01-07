@@ -1,7 +1,7 @@
 # tools.py
 from typing import Optional
 from langchain_core.tools import tool
-from rag import retriever
+from .rag import retriever
 
 @tool
 def retrieve_portfolio_info(query: str):

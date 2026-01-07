@@ -1,58 +1,26 @@
 # assistant.py
 import os
 import datetime
-from typing import Annotated, TypedDict, List, Any, Literal
-from pydantic import BaseModel, Field
-from dotenv import load_dotenv
+from typing import List
 
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
-from langchain_openai import ChatOpenAI
-from langchain_ollama import ChatOllama
 from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
 
-from utils import load_prompt
-from tools import send_email, retrieve_portfolio_info, log_unanswered_question
+from ..tools.tools import send_email, retrieve_portfolio_info, log_unanswered_question
+from ..utils.utils import load_prompt
+from .state import State, RouteQuery, Grade
+from .config import create_model
 
-load_dotenv()
 
-class State(TypedDict):
-    messages: Annotated[List[Any], add_messages]
-    router_decision: dict
-    search_context: str
-    grade: Literal["good", "bad"]
-
-class RouteQuery(BaseModel):
-    step: Literal["search", "email", "chat"] = Field(
-        description="The next step to take: 'search' for retrieving information about Michael, 'email' to contact Michael, or 'chat' for general conversation."
-    )
-    search_query: str = Field(default="", description="The search query if step is 'search'.")
-    email_address: str = Field(default="", description="The user's email if step is 'email'.")
-    email_body: str = Field(default="", description="The message content if step is 'email'.")
-    
-class Grade(BaseModel):
-    score: Literal["good", "bad"] = Field(
-        description="Must be 'good' if the context contains enough factual information to answer the question, or 'bad' otherwise."
-    )
 class PortfolioAssistant:
     def __init__(self, dev_mode: bool = False):
         self.dev_mode = dev_mode
-        self.router_llm = self._create_model(temperature=0).with_structured_output(RouteQuery)
-        self.grader_llm = self._create_model(temperature=0).with_structured_output(Grade)
-        self.generator_llm = self._create_model(temperature=0.7)
+        self.router_llm = create_model(self.dev_mode, temperature=0).with_structured_output(RouteQuery)
+        self.grader_llm = create_model(self.dev_mode, temperature=0).with_structured_output(Grade)
+        self.generator_llm = create_model(self.dev_mode, temperature=0.7)
         self.system_instruction = load_prompt("system_prompt.md")
         self.workflow = self._build_graph()
         
-    def _create_model(self, temperature=0.7):
-        if self.dev_mode:
-            return ChatOllama(model=os.getenv("OLLAMA_MODEL"), temperature=temperature) 
-        else:
-            return ChatOpenAI(
-                base_url="https://openrouter.ai/api/v1",
-                api_key=os.getenv("OPENROUTER_API_KEY"),
-                temperature=temperature
-            )
-
     def _router_node(self, state: State) -> State:
         messages = state["messages"]
         last_msg_content = messages[-1].content

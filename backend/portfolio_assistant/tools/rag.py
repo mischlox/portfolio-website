@@ -11,15 +11,11 @@ from langchain_core.documents import Document
 
 load_dotenv()
 
-PERSIST_DIRECTORY = "./chroma_db"
-DATA_DIRECTORY = "./data"
+PERSIST_DIRECTORY = "data/vectordb/chroma_db"
+DATA_DIRECTORY = "data/source"
 LAST_UPDATE_FILE = os.path.join(PERSIST_DIRECTORY, ".last_update")
 
 def should_rebuild_vectorstore():
-    """
-    Checks if any file in DATA_DIRECTORY has been modified since the last 
-    successful vector store creation, including .json sidecar files.
-    """
     if not os.path.exists(LAST_UPDATE_FILE):
         return True
 
@@ -44,10 +40,6 @@ def should_rebuild_vectorstore():
     return False
 
 def load_documents_with_metadata():
-    """
-    Loads all supported documents, and merges metadata from corresponding 
-    JSON sidecar files (e.g., file.pdf loads file.json).
-    """
     docs = []
     
     if not os.path.exists(DATA_DIRECTORY) or not os.listdir(DATA_DIRECTORY):
