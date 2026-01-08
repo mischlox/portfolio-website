@@ -8,7 +8,12 @@ export type Message = { role: 'user' | 'ai'; text: string };
 
 export const useChatBot = () => {
     const [messages, setMessages] = useState<Message[]>([
-        { role: 'ai', text: `System initialized. I have loaded ${PROFILE.first_name}'s professional vector embeddings. \n\nHow can I assist you today?` }
+        { 
+            role: 'ai', 
+            text: `Hello! I'm the portfolio assistant for ${PROFILE.first_name}. 
+I can answer detailed questions about his experience, tech stack, and projects using the full RAG-enabled portfolio data. 
+I can also generate tailored emails to directly contact him. How can I help you today?` 
+        }
     ]);
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
@@ -20,8 +25,8 @@ export const useChatBot = () => {
         const userMessage: Message = { role: 'user', text: input };
         
         // --- 1. Prepare State Updates ---
-        // Capture the current history before adding the new message
-        const historyForAPI = messages.filter(m => m.role !== 'ai' || !m.text.startsWith('System initialized'));
+        // Filter out the initial AI message from history for the API call
+        const historyForAPI = messages.filter(m => m.role !== 'ai' || !m.text.startsWith('Hello! I\'m the portfolio assistant'));
 
         setMessages(prev => [...prev, userMessage]);
         setInput('');

@@ -24,24 +24,39 @@ export const PROFILE = {
       company: "TUM Institute of Automotive Technology, Garching", 
       role: "Master Thesis: Multimodal Pseudo-Labeling for 3D Object Detection in Autonomous Driving (Note: 1.0)", 
       year: "11/2024 - 06/2025", 
-      desc: "Development of a framework for sensor fusion of LiDAR and camera data to improve the 3D Pseudo-Labeling pipeline. (Tech: Python, PyTorch, OpenMMLab, Docker, Git)" 
+      desc: "Development of a framework for sensor fusion of LiDAR and camera data to improve the 3D Pseudo-Labeling pipeline. (Tech: Python, PyTorch, OpenMMLab, Docker, Git)",
+      logoPath: "/logos/tum-logo.svg" // ASSUMED PATH: Add your logo file path here
     },
     { 
       company: "HAT.tec GmbH, Neubiberg", 
       role: "Werkstudent - Perception & Sensor Systems", 
       year: "10/2022 - 10/2024", 
-      desc: "Development of ROS2 applications for processing and analyzing various sensor data in an agile team. Training, evaluation, and optimization of an object detection model for aircraft. (Tech: C++, Python, ROS2, Qt, PyTorch, TensorRT)" 
+      desc: "Development of ROS2 applications for processing and analyzing various sensor data in an agile team. Training, evaluation, and optimization of an object detection model for aircraft. (Tech: C++, Python, ROS2, Qt, PyTorch, TensorRT)",
+      logoPath: "/logos/hattec-logo.png" // ASSUMED PATH: Add your logo file path here
     },
     { 
       company: "HENSOLDT Optronics GmbH, Oberkochen", 
       role: "Praktikant / Werkstudent / Bachelor Thesis - Computer Vision & Image Processing", 
       year: "09/2020 - 09/2022", 
-      desc: "Bachelor Thesis: Evaluation and optimization of Deep-Learning based object detection on embedded inference hardware (Note: 1.3). Setup of an Object-Detection-Demo with TensorRT, Deepstream, and Vitis AI. Implementation of hardware-accelerated image processing on FPGAs. (Tech: C++, CMake, Buildroot, TensorRT, Deepstream, GStreamer, Python)" 
+      desc: "Bachelor Thesis: Evaluation and optimization of Deep-Learning based object detection on embedded inference hardware (Note: 1.3). Setup of an Object-Detection-Demo with TensorRT, Deepstream, and Vitis AI. Implementation of hardware-accelerated image processing on FPGAs. (Tech: C++, CMake, Buildroot, TensorRT, Deepstream, GStreamer, Python)",
+      logoPath: "/logos/hensoldt-logo.png" // ASSUMED PATH: Add your logo file path here
     },
   ],
   education: [
-    { school: "Technische Universität München", degree: "Master of Science - Robotics, Cognition and Intelligence", year: "10/2022 - 09/2025" },
-    { school: "Hochschule Aalen", degree: "Bachelor of Science - Informatik / Software Engineering", year: "10/2018 - 09/2022" },
+    { 
+        school: "Technische Universität München", 
+        degree: "Master of Science - Robotics, Cognition and Intelligence", 
+        year: "10/2022 - 09/2025", 
+        logoPath: "/logos/tum-logo.svg",
+        programUrl: "https://www.tum.de/studium/studienangebot/detail/robotics-cognition-intelligence-master-of-science-msc"
+    }, 
+    { 
+        school: "Hochschule Aalen", 
+        degree: "Bachelor of Science - Informatik / Software Engineering", 
+        year: "10/2018 - 09/2022", 
+        logoPath: "/logos/hs-aalen-logo.png",
+        programUrl: "https://www.hs-aalen.de/de/courses/48/info" // ADDED LINK
+    }, 
   ],
   projects: [
     { 
