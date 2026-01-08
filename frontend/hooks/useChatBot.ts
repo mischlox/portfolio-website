@@ -13,9 +13,9 @@ export const useChatBot = (onAction: (action: string) => void) => {
     const [messages, setMessages] = useState<Message[]>([
         { 
             role: 'ai', 
-            text: `Hello! I'm the portfolio assistant for ${PROFILE.first_name}. 
+            text: `Hello! I'm ${PROFILE.first_name}'s AI assistant. 
 I can answer detailed questions about his experience, tech stack, and projects using the full RAG-enabled portfolio data. 
-I can also generate tailored emails to directly contact him. How can I help you today?` 
+I can also navigate this website for you.\n\nHow can I help you today?` 
         }
     ]);
     const [input, setInput] = useState('');
