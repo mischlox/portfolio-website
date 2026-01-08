@@ -33,7 +33,11 @@ export const ContactSection: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center pt-20 pb-40 text-center relative">
-      {/* ... (Background Glow and main motion.div) ... */}
+      
+      <div 
+        aria-hidden="true" 
+        className="absolute inset-x-0 top-0 h-96 w-96 mx-auto bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"
+      />
 
       <motion.div 
         initial={{ scale: 0.9, opacity: 0 }}
