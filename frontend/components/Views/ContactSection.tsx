@@ -62,7 +62,7 @@ export const ContactSection: React.FC = () => {
         )}
 
         {/* --- CONTACT FORM --- */}
-        <form onSubmit={handleSubmit} className="space-y-4 mb-10 p-6 bg-[#0a0a0a] rounded-xl border border-white/10 shadow-xl">
+        <form onSubmit={handleSubmit} className="bg-black/30 space-y-4 mb-10 p-6 bg-[#0a0a0a] rounded-xl border border-white/10 shadow-xl">
           {/* Name Input with limit */}
           <input
             type="text"
@@ -72,7 +72,7 @@ export const ContactSection: React.FC = () => {
             onChange={handleChange}
             required
             maxLength={100} // Added character limit
-            className="w-full bg-[#050505] text-white px-5 py-3 rounded-lg border border-white/10 focus:outline-none focus:border-blue-500 transition-colors"
+            className="w-full bg-black text-white px-5 py-3 rounded-lg border border-white/10 focus:outline-none focus:border-blue-500 transition-colors"
           />
           {/* Email Input with limit */}
           <input
@@ -106,7 +106,7 @@ export const ContactSection: React.FC = () => {
             className={`w-full font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg ${
               status === 'loading'
                 ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-500 shadow-blue-900/40'
+                : 'bg-blue-800 text-white hover:bg-blue-500 shadow-blue-900/40'
             }`}
           >
             {status === 'loading' ? (

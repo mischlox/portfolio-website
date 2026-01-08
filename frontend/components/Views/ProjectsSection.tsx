@@ -27,7 +27,7 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
 
   if (!gallery || gallery.length === 0) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
         <div className="bg-[#0F0F0F] p-8 rounded-xl shadow-2xl max-w-lg w-full text-center border border-white/10">
           <p className="text-gray-300 mb-4">No gallery images available for **{project.title}**.</p>
           <button
@@ -70,7 +70,7 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
   return (
     // Backdrop click handler for closing
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
@@ -101,7 +101,7 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
           <div className="h-full flex flex-col md:flex-row">
             
             {/* Image Viewer (Left/Top) */}
-            <div className="relative w-full md:w-3/4 bg-black/50 overflow-hidden flex items-center justify-center p-4">
+            <div className="relative w-full md:w-3/4 bg-black/40 overflow-hidden flex items-center justify-center p-4">
                <AnimatePresence initial={false} mode="wait">
                   <motion.div
                      key={currentImageIndex}

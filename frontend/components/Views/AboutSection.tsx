@@ -85,84 +85,108 @@ export const AboutSection: React.FC = () => {
       {/* Career History and Education sections container */}
       <motion.div variants={itemVariant} className="space-y-16"> 
         
-        {/* --- Education Section --- */}
-        <section>
-          <h3 className="text-4xl font-medium text-gray-500 uppercase tracking-widest mb-6">Education</h3>
-          <div className="space-y-4">
-            {PROFILE.education.map((edu, i) => (
-              <div key={i} className="bg-[#0F0F0F] p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors flex items-start gap-4">
+{/* --- Education Section --- */}
+<section>
+    {/* Title color changed from text-gray-500 to text-white */}
+    <h3 className="text-4xl font-medium text-white uppercase tracking-widest mb-6">Education</h3>
+    
+    {/* Copied Timeline Container Styling from Career History */}
+    <div className="space-y-6 border-l border-white/10 ml-2 pl-8"> 
+        {PROFILE.education.map((edu, i) => (
+            <div key={i} className="relative group">
                 
-                {/* Logo for Education */}
-                {edu.logoPath && (
-                  <div className="w-10 h-10 flex-shrink-0 mt-1">
-                    <Image 
-                      src={edu.logoPath} 
-                      alt={edu.school + " logo"} 
-                      width={40} 
-                      height={40}
-                      className="object-contain"
-                    />
-                  </div>
-                )}
+                {/* Timeline Dot (Copied from Career History) */}
+                <span className="absolute -left-[37px] top-4 w-3 h-3 rounded-full bg-[#050505] border-2 border-gray-700 group-hover:border-blue-500 group-hover:scale-125 transition-all z-10"></span>
                 
-                <div className="flex-1"> {/* Use flex-1 to push content to the side */}
-                  <div className="text-lg font-bold text-white">{edu.school}</div>
-                  <div className="text-gray-400 text-sm mb-4">{edu.degree}</div>
+                {/* The Black Box Styling applied to the content */}
+                <div className="bg-black/40 p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors flex items-start gap-4">
                   
-                  {/* Container for Year and Link */}
-                  <div className="flex flex-wrap items-center gap-4"> 
-                    <div className="text-xs text-blue-400 font-medium bg-blue-500/10 inline-block px-2 py-1 rounded">
-                      {edu.year}
-                    </div>
-                    
-                    {/* NEW: Click for More Info Link */}
-                    {edu.programUrl && (
-                        <a 
-                            href={edu.programUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-xs text-white font-medium bg-white/10 hover:bg-white/20 transition-colors inline-flex items-center gap-1 px-3 py-1 rounded-full"
-                        >
-                            More Info 
-                            <ArrowUpRight size={12} className="ml-0.5"/>
-                        </a>
+                    {/* Logo for Education */}
+                    {edu.logoPath && (
+                        <div className="w-10 h-10 flex-shrink-0 mt-1">
+                            <Image 
+                                src={edu.logoPath} 
+                                alt={edu.school + " logo"} 
+                                width={40} 
+                                height={40}
+                                className="object-contain"
+                            />
+                        </div>
                     )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+                    
+                    <div className="flex-1"> {/* Use flex-1 to push content to the side */}
+                      
+                        {/* Container for Year and Link - Moved to the top for timeline look */}
+                        <div className="flex flex-wrap items-center gap-4 mb-3"> 
+                            <div className="text-xs text-blue-400 font-medium bg-blue-500/10 inline-block px-2 py-1 rounded">
+                                {edu.year}
+                            </div>
+                            
+                            {/* Click for More Info Link */}
+                            {edu.programUrl && (
+                                <a 
+                                    href={edu.programUrl} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-xs text-white font-medium bg-white/10 hover:bg-white/20 transition-colors inline-flex items-center gap-1 px-3 py-1 rounded-full"
+                                >
+                                    More Info 
+                                    <ArrowUpRight size={12} className="ml-0.5"/>
+                                </a>
+                            )}
+                        </div>
 
-        {/* --- Career History --- */}
-        <section>
-          <h3 className="text-4xl font-medium text-gray-500 uppercase tracking-widest mb-6">Career History</h3>
-          <div className="space-y-8 border-l border-white/10 ml-2 pl-8">
+                        <div className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{edu.school}</div>
+                        <div className="text-gray-400 text-sm">{edu.degree}</div>
+                        
+                        {/* Note: The description/P element is missing in the Education structure 
+                           but included here for completeness if you decide to add it later. 
+                        <p className="text-sm text-gray-500 leading-relaxed mt-2">{edu.desc}</p>
+                        */}
+                    </div>
+                </div>
+            </div>
+        ))}
+    </div>
+</section>
+      {/* --- Career History --- */}
+      <section>
+      <h3 className="text-4xl font-medium text-white uppercase tracking-widest mb-6">Career</h3>
+      {/* Changed space-y-8 to space-y-6 for slightly tighter timeline spacing */}
+          <div className="space-y-6 border-l border-white/10 ml-2 pl-8"> 
             {PROFILE.experience.map((job, i) => (
               <div key={i} className="relative group">
-                {/* Timeline Dot */}
-                <span className="absolute -left-[37px] top-1.5 w-3 h-3 rounded-full bg-[#050505] border-2 border-gray-700 group-hover:border-blue-500 group-hover:scale-125 transition-all"></span>
                 
-                <div className="text-sm text-gray-500 font-medium mb-1">{job.year}</div>
+                {/* Timeline Dot (Adjusted position to align with the box) */}
+                <span className="absolute -left-[37px] top-4 w-3 h-3 rounded-full bg-[#050505] border-2 border-gray-700 group-hover:border-blue-500 group-hover:scale-125 transition-all z-10"></span>
                 
-                {/* Container for Role and optional Logo */}
-                <div className="flex items-center gap-3">
-                  <div className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{job.role}</div>
-                  {job.logoPath && (
-                    <div className="w-6 h-6 flex-shrink-0 opacity-70">
-                      <Image
-                        src={job.logoPath}
-                        alt={job.company + " logo"}
-                        width={24}
-                        height={24}
-                        className="object-contain"
-                      />
+                {/* The Black Box Styling applied to the content */}
+                <div className="bg-black/40 p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
+                    
+                    {/* Year Tag (Styled like the education year tag) */}
+                    <div className="text-xs text-blue-400 font-medium bg-blue-500/10 inline-block px-2 py-1 rounded mb-2">
+                        {job.year}
                     </div>
-                  )}
+
+                    {/* Container for Role and optional Logo */}
+                    <div className="flex items-center gap-3 mb-1">
+                      <div className=" text-lg font-bold text-white group-hover:text-blue-400 transition-colors">{job.role}</div>
+                      {job.logoPath && (
+                        <div className="w-6 h-6 flex-shrink-0 opacity-70">
+                          <Image
+                            src={job.logoPath}
+                            alt={job.company + " logo"}
+                            width={24}
+                            height={24}
+                            className="object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="text-gray-400 mb-3">{job.company}</div>
+                    <p className="text-sm text-gray-500 leading-relaxed">{job.desc}</p>
                 </div>
-                
-                <div className="text-gray-400 mb-2">{job.company}</div>
-                <p className="text-sm text-gray-500 leading-relaxed">{job.desc}</p>
               </div>
             ))}
           </div>
