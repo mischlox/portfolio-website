@@ -100,7 +100,7 @@ class PortfolioAssistant:
         refusal_content = (
             f"I couldn't find specific details about '{query}' in Michael Schlosser's database. "
             f"I have logged this as an unanswered question for review. "
-            f"Would you like me to send Michael an email with your question directly?"
+            f"Would you like to contact Michael with your question directly?"
         )
         
         response = AIMessage(content=refusal_content)        
