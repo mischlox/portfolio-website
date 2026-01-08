@@ -2,10 +2,11 @@
 import os
 import time
 import json
+import shutil
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader
 from langchain_core.documents import Document
 
@@ -99,6 +100,41 @@ def load_documents_with_metadata():
 
     return docs
 
+def split_documents_markdown(docs: list[Document]) -> list[Document]:
+    
+    headers_to_split_on = [
+        ("#", "Header1"),
+        ("##", "Header2"),
+        ("###", "Header3"),
+    ]
+
+    splits = []
+    
+    for doc in docs:
+        # Only process Markdown/Text files this way
+        if doc.metadata.get("source_filename", "").endswith(('.md', '.txt')):
+            
+            markdown_splitter = MarkdownHeaderTextSplitter(
+                headers_to_split_on=headers_to_split_on,
+                strip_headers=False # Keep the headings in the content for context
+            )
+            
+            markdown_splits = markdown_splitter.split_text(doc.page_content)
+            
+            # Carry over metadata (like source_filename) to the new chunks
+            for split in markdown_splits:
+                # Add the specific header level metadata (e.g., 'Header2': 'PROFESSIONAL EXPERIENCE')
+                split.metadata.update(doc.metadata)
+            
+            splits.extend(markdown_splits)
+            
+        else:
+            # For PDFs or other unstructured files, use a standard recursive split
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+            splits.extend(text_splitter.split_documents([doc]))
+
+    return splits
+
 def get_retriever():
     embeddings = OpenAIEmbeddings(
         model="text-embedding-3-small", 
@@ -110,12 +146,13 @@ def get_retriever():
     
     if should_rebuild or not os.path.exists(PERSIST_DIRECTORY):
         print("--- RAG: Creating new Vector Store (due to missing or updated files) ---")
-        
+        if os.path.exists(PERSIST_DIRECTORY):
+            print(f"--- RAG: Deleting old persistence directory for clean rebuild: {PERSIST_DIRECTORY} ---")
+            shutil.rmtree(PERSIST_DIRECTORY)
         os.makedirs(PERSIST_DIRECTORY, exist_ok=True)
         
         docs = load_documents_with_metadata()
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-        splits = text_splitter.split_documents(docs)
+        splits = split_documents_markdown(docs)
 
         vectorstore = Chroma.from_documents(
             documents=splits,
@@ -133,6 +170,6 @@ def get_retriever():
             embedding_function=embeddings
         )
 
-    return vectorstore.as_retriever(search_kwargs={"k": 3})
+    return vectorstore.as_retriever(search_kwargs={"k": 5})
 
 retriever = get_retriever()

@@ -14,15 +14,6 @@ def retrieve_portfolio_info(query: str):
     return "\n\n".join([doc.page_content for doc in retrieved_docs])
 
 @tool
-def send_email(user_email: str, message_body: str, subject: str = "Portfolio Inquiry"):
-    """
-    Send an email to Michael on behalf of the user.
-    """
-    # TODO: Logic to actually send email would go here
-    print(f"--- TOOL CALL: Sending Email to Michael from {user_email} ---")
-    return f"Email successfully sent from {user_email}. Subject: {subject}"
-
-@tool
 def log_unanswered_question(question: str, user_name: str = "Anonymous"):
     """
     Log an unanswered question about Michael Schlosser to a database with a timestamp.

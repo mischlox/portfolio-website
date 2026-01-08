@@ -20,3 +20,4 @@ class Grade(BaseModel):
     score: Literal["good", "bad"] = Field(
         description="Must be 'good' if the context contains enough factual information to answer the question, or 'bad' otherwise."
     )
+    reason: str = Field(description="Reason why the context was graded as 'good' or 'bad'")

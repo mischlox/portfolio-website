@@ -6,7 +6,7 @@ from typing import List
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph import StateGraph, START, END
 
-from ..tools.tools import send_email, retrieve_portfolio_info, log_unanswered_question
+from ..tools.tools import retrieve_portfolio_info, log_unanswered_question
 from ..utils.utils import load_prompt
 from .state import State, RouteQuery, Grade
 from .config import create_model, FrontendCommands
@@ -16,7 +16,7 @@ class PortfolioAssistant:
     def __init__(self, dev_mode: bool = False):
         self.dev_mode = dev_mode
         self.router_llm = create_model(self.dev_mode, temperature=0).with_structured_output(RouteQuery)
-        self.grader_llm = create_model(self.dev_mode, temperature=0).with_structured_output(Grade)
+        self.grader_llm = create_model(self.dev_mode, temperature=0.5).with_structured_output(Grade)
         self.generator_llm = create_model(self.dev_mode, temperature=0.7)
         self.system_instruction = load_prompt("system_prompt.md")
         self.workflow = self._build_graph()
@@ -55,10 +55,11 @@ class PortfolioAssistant:
         print("--- GRADER: Grading Retrieved Context ---")
 
         grader_prompt = (
-            "You are a strict context grader. Your goal is to determine if the provided 'Context' "
+            "You are a context grader. Your goal is to determine if the provided 'Context' "
             "is sufficient to answer the 'Question'.\n"
-            "Score 'good' if the Context contains the specific, factual answer to the Question. "
-            "Score 'bad' if the Context is empty, irrelevant, or lacks the necessary detail to fully answer the Question.\n"
+            "Score 'good' if the Context contains the answer to the Question. "
+            "Score 'bad' if the Context is empty, irrelevant, or is not sufficient to answer the Question.\n"
+            "Give a reason why you decided if it should be graded as 'good' or 'bad'."
             f"Question: {query}\n"
             f"Context: {context}"
         )
@@ -67,6 +68,8 @@ class PortfolioAssistant:
         grade = grade_result.score
         
         print(f"--- GRADER: Score is '{grade}' ---")
+        print(f"--- GRADER: Reason: '{grade_result.reason}' ---")
+
         return {"grade": grade}
 
     def _generate_answer_good_node(self, state: State) -> State:
@@ -76,11 +79,11 @@ class PortfolioAssistant:
         current_date = datetime.date.today().strftime("%Y-%m-%d")
         prompt = (
             f"SYSTEM: {self.system_instruction}\n\n"
-            f"**Today's Date is: {current_date}**\n\n"
             f"Answer the user question based strictly on the context provided below. "
             f"**Synthesize a comprehensive summary** from all relevant sections in the context."
             f"**DO NOT reference the context or the database in your final answer.** "
             f"Keep the final answer concise.\n"
+            f"**Today's Date is: {current_date}**\n\n"
             f"Question: {query}\n"
             f"Context: {context}"
         )
