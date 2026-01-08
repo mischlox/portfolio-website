@@ -8,14 +8,22 @@ import { PROFILE } from '../Common/Data';
 import { RotatingText } from './RotatingText';
 import { useChatBot, Message } from '../../hooks/useChatBot'; 
 
-export const ChatSection: React.FC = () => {
+// Define the required props for ChatSection
+interface ChatSectionProps {
+    onAction: (action: string) => void;
+}
+
+// Update the component signature to accept the onAction prop
+export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
+  
+  // CRITICAL FIX: Pass the onAction prop directly to useChatBot
   const { 
     messages, 
     input, 
     isTyping, 
     setInput, 
     handleSend 
-  } = useChatBot();
+  } = useChatBot(onAction);
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 

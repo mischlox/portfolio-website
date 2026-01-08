@@ -1,5 +1,4 @@
 # tools.py
-from typing import Optional
 import datetime
 from langchain_core.tools import tool
 from .rag import retriever

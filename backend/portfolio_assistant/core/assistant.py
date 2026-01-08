@@ -9,7 +9,7 @@ from langgraph.graph import StateGraph, START, END
 from ..tools.tools import send_email, retrieve_portfolio_info, log_unanswered_question
 from ..utils.utils import load_prompt
 from .state import State, RouteQuery, Grade
-from .config import create_model
+from .config import create_model, FrontendCommands
 
 
 class PortfolioAssistant:
@@ -32,7 +32,6 @@ class PortfolioAssistant:
             f"- If the user is just saying hello, asking 'how are you', or chatting -> 'chat'."
             f"CRITICAL:"
             f"- If 'step' is 'search', extract the search_query from this message."
-            f"- If 'step' is 'email', extract the email_address and email_body from this message.\n"
             f"The user just said: '{last_msg_content}"
         ))
         messages = [router_system_msg] + state["messages"]
@@ -105,15 +104,16 @@ class PortfolioAssistant:
         return {"messages": [response]}
 
     def _email_node(self, state: State) -> State:
-        # TODO: Improve and actually implement send_email execution path
-        data = state["router_decision"]
-        user_email = data.get("email_address", "missing@example.com")
-        body = data.get("email_body", "No content provided by router.")
-        
-        print(f"--- ROUTER: Executing Email to {user_email} ---")
-        result = send_email.invoke({"user_email": user_email, "message_body": body})
-        response = AIMessage(content=f"I have successfully sent your request: {result}")
-        return {"messages": [response]}
+        user_facing_message = (
+            f"Absolutely! I detected your intent to send an email. "
+            f"I have scrolled down to the contact form for you. "
+            f"Please review and send your message there."
+        )
+        response = AIMessage(content=user_facing_message)
+        return {
+            "messages": [response],
+            "next_action": FrontendCommands.EMAIL_ACTION_COMMAND # <--- Set the action here
+        }
 
     def _chat_node(self, state: State) -> State:
         print(f"--- ROUTER: Direct Chat ---")
@@ -174,7 +174,7 @@ class PortfolioAssistant:
             graph.get_graph().draw_mermaid_png(output_file_path="assistant_graph.png")
         return graph
 
-    async def chat(self, user_input: str, history: List[dict]) -> str:
+    async def chat(self, user_input: str, history: List[dict]) -> State:
         messages: List[BaseMessage] = []
         for msg in history:
             if msg['role'] == 'user':
@@ -183,4 +183,4 @@ class PortfolioAssistant:
                 messages.append(AIMessage(content=msg['text']))
         messages.append(HumanMessage(content=user_input))
         result = await self.workflow.ainvoke({"messages": messages, "router_decision": {}})
-        return result["messages"][-1].content
+        return result

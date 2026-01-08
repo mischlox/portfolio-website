@@ -15,6 +15,7 @@ export const PROFILE = {
   first_name: "Michael",
   last_name: "Schlosser",
   full_name: "Michael Schlosser",
+  email: "mschlosser.se@gmail.com",
   // ... rest of the PROFILE data ...
   role: "Software Engineer",
   tagline: "Software Engineer with focus on AI-based image processing and Embedded Systems.",

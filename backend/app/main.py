@@ -7,6 +7,7 @@ from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+from app.email_api import router as email_router
 from portfolio_assistant.core.assistant import PortfolioAssistant
 
 DEV_MODE = os.getenv("APP_ENV") == "dev"
@@ -27,6 +28,8 @@ async def lifespan(app: FastAPI):
     print("Shutting down Portfolio Assistant...")
 
 app = FastAPI(title="Portfolio Chat API", lifespan=lifespan)
+
+app.include_router(email_router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -55,11 +58,15 @@ async def chat_endpoint(request: ChatRequest):
         raise HTTPException(status_code=500, detail="Assistant not initialized")
 
     # Pass the request to the assistant
-    response_text = await portfolio_assistant.chat(
+    result = await portfolio_assistant.chat(
         user_input=request.message,
         history=[m.dict() for m in request.history]
     )
-    return {"response": response_text}
+    response_text = result["messages"][-1].content
+    return {
+            "response": response_text,
+            "action": result.get("next_action", "none") # Add a new key for the action
+        }
 
 if __name__ == "__main__":
     print(f"Starting Server. Dev Mode: {DEV_MODE}")

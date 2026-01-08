@@ -4,9 +4,12 @@ import { useState, useCallback, useRef } from 'react';
 import { PROFILE } from '../components/Common/Data'; // Import PROFILE for initial message
 
 // Define the Message type here, or import it if defined globally
-export type Message = { role: 'user' | 'ai'; text: string };
+export type Message = { role: 'user' | 'ai'; text: string; action?: string };
 
-export const useChatBot = () => {
+// Define a constant for the delay before action execution (e.g., 1500ms or 1.5 seconds)
+const ACTION_DELAY_MS = 1500; 
+
+export const useChatBot = (onAction: (action: string) => void) => {
     const [messages, setMessages] = useState<Message[]>([
         { 
             role: 'ai', 
@@ -46,14 +49,27 @@ I can also generate tailored emails to directly contact him. How can I help you 
             });
 
             if (!response.ok) {
+                // Attempt to read error message if available
+                const errorDetail = await response.text();
+                console.error("API call failed:", response.status, errorDetail);
                 throw new Error(`API call failed: ${response.statusText}`);
             }
             
+            // EXPECTING: { "response": "text", "action": "SCROLL_TO_CONTACT" }
             const data = await response.json();
             const aiResponseText = data.response;
+            const action = data.action; // <-- Extract the action key
 
             // --- 3. Update with AI response ---
             setMessages(prev => [...prev, { role: 'ai', text: aiResponseText }]);
+            
+            // --- 4. Execute UI Action with Delay ---
+            if (action && action !== 'none') {
+                // Wait for ACTION_DELAY_MS before executing the scroll
+                setTimeout(() => {
+                    onAction(action); 
+                }, ACTION_DELAY_MS);
+            }
 
         } catch (error) {
             console.error("Failed to fetch AI response:", error);
@@ -61,7 +77,7 @@ I can also generate tailored emails to directly contact him. How can I help you 
         } finally {
             setIsTyping(false);
         }
-    }, [input, isTyping, messages]); // Dependencies for useCallback
+    }, [input, isTyping, messages, onAction]); // Add onAction dependency
 
     return {
         messages,

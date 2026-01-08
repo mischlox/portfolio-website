@@ -5,7 +5,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { View, PROFILE } from '@/components/Common/Data';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Check } from 'lucide-react'; // Import Check icon for notification
 
 // Import Layout Components
 import { Navigation } from '@/components/Layout/Navigation';
@@ -60,6 +60,25 @@ const AnimatedScrollArrow: React.FC<{ targetRef: React.RefObject<HTMLDivElement>
 };
 // -----------------------------------------------------------
 
+// --- NEW: Temporary Notification Component (POSITION MODIFIED) ---
+const Notification: React.FC<{ message: string }> = ({ message }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.9 }} // Initial position is up
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -50, scale: 0.9 }} // Exit position is up
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            // --- MODIFIED POSITIONING CLASSES ---
+            // top-5 left-1/2 -translate-x-1/2 centers it at the top
+            className="fixed top-5 left-1/2 -translate-x-1/2 p-4 bg-green-600 text-white rounded-xl shadow-2xl z-[70] flex items-center gap-2 font-semibold"
+        >
+            <Check size={20} />
+            {message}
+        </motion.div>
+    );
+};
+// ---------------------------------------------
+
 
 // Define a mapping for the refs
 const viewRefs = {
@@ -69,10 +88,21 @@ const viewRefs = {
   contact: 'contact',
 } as const;
 
+// --- NEW: Action mapping for the chat bot command ---
+const ACTION_MAP: Record<string, View> = {
+    'SCROLL_TO_CONTACT': 'contact',
+};
+// ----------------------------------------------------
+
+
 export default function Portfolio() {
   const [activeView, setActiveView] = useState<View>('chat');
   const [scrolled, setScrolled] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); 
+  
+  // --- NEW STATE for Notification ---
+  const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
+  // ------------------------------------
 
   // --- Refs for each section ---
   const chatRef = useRef<HTMLDivElement>(null);
@@ -150,12 +180,33 @@ export default function Portfolio() {
       
       window.scrollTo({
         top: scrollPosition,
-        behavior: 'smooth'
+        // The scrolling speed is controlled by the browser's default 'smooth' behavior
+        behavior: 'smooth' 
       });
+      
+      // --- NEW: Trigger Notification after scrolling completes (approx 700ms) ---
+      // NOTE: There is no native promise for scroll-to-end. We use a short delay.
+      if (view === 'contact') {
+          setTimeout(() => {
+              setNotificationMessage("Here you go! Contact form is ready.");
+              // Clear the notification after a few seconds
+              setTimeout(() => setNotificationMessage(null), 3000); 
+          }, 700); // Wait for the scroll to finish
+      }
+      // -------------------------------------------------------------------------
     }
 
   }, [sectionRefs]);
   
+  // --- NEW: Action Handler for Chat Bot ---
+  const handleChatAction = useCallback((action: string) => {
+      const targetView = ACTION_MAP[action];
+      if (targetView) {
+          handleSetActiveView(targetView);
+      }
+  }, [handleSetActiveView]);
+  // ------------------------------------------
+
   const sectionVariants = {
     hidden: { opacity: 0, y: 100 },
     visible: { 
@@ -205,7 +256,8 @@ export default function Portfolio() {
           id="chat" 
           className="min-h-screen pt-10 relative"
         >
-          <ChatSection />
+          {/* PASS THE ACTION HANDLER */}
+          <ChatSection onAction={handleChatAction} /> 
         </section>
 
         {/* Apply scroll animation to the subsequent sections */}
@@ -246,6 +298,12 @@ export default function Portfolio() {
         </motion.section>
 
       </main>
+
+      {/* --- NEW: Notification Display (Now fixed to the top) --- */}
+      <AnimatePresence>
+        {notificationMessage && <Notification message={notificationMessage} />}
+      </AnimatePresence>
+      {/* ----------------------------------- */}
 
       {/* Footer */}
       <footer className="text-center py-8 text-xs text-gray-600 border-t border-white/5 relative z-10">
