@@ -6,7 +6,6 @@ from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from dotenv import load_dotenv
 load_dotenv()
 
-# --- Connection Configuration ---
 conf = ConnectionConfig(
     MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
     MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
@@ -21,8 +20,6 @@ conf = ConnectionConfig(
 MAIL_TO = os.getenv("MAIL_TO")
 
 router = APIRouter()
-
-
 
 class ContactFormRequest(BaseModel):
     name: str = Field(..., max_length=100)
@@ -60,7 +57,27 @@ Message:
             reply_to=[request.email] 
         )
         await fm.send_message(owner_message)
-        return {"message": "Email sent successfully to portfolio owner"}
+
+        confirmation_email_body = f"""
+Dear {request.name},
+
+Thank you for reaching out! I have successfully received your message and will respond to your inquiry as soon as possible.
+
+Best regards,
+Michael Schlosser
+
+***
+Disclaimer: This is an automated confirmation of your contact form submission to Michael Schlosser's portfolio. If you received this email in error and did not submit a contact form, please ignore this message.
+"""
+        confirmation_message = MessageSchema(
+            subject="Confirmation: Your Inquiry has been received",
+            recipients=[request.email],
+            body=confirmation_email_body,
+            subtype=MessageType.plain
+        )
+        await fm.send_message(confirmation_message)
+
+        return {"message": "Emails sent successfully to owner and sender"}
         
     except Exception as e:
         print(f"ERROR SENDING EMAIL: {e}")
