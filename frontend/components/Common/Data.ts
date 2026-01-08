@@ -64,33 +64,52 @@ export const PROFILE = {
       title: "Company Research Agent", 
       cat: "AI / Agents", 
       desc: "An automated research tool built with Google ADK. It performs web searches, summarizes findings, and generates detailed interview reports and tailored questions.",
-      techStack: ["Google ADK", "Python", "LLMs", "Streamlit"], // NEW
-      imagePath: "", // NEW: Add your image paths here
-      url: "https://github.com/mischlox" // Update with actual link if available
+      techStack: ["Google ADK", "Python", "LLMs", "Streamlit"],
+      titleImage: "/images/company-research-agent-main.jpg", 
+      url: "https://github.com/mischlox",
+      galleryImages: [
+        { path: "/images/agent/workflow-diagram.png", desc: "Conceptual workflow diagram of the research agent." },
+        { path: "/images/agent/streamlit-ui.png", desc: "Screenshot of the Streamlit user interface." },
+        { path: "/images/agent/report-snippet.jpg", desc: "A snippet from a generated interview report." },
+      ]
     },
     { 
       title: "Face Touching Detector", 
       cat: "Computer Vision", 
-      desc: "Desktop-App for real-time face touch detection using YOLOv5m (Libtorch C++) with QT5-GUI. Optimized for low-latency inference on standard CPU hardware.",
-      techStack: ["C++", "Qt5", "Libtorch", "YOLOv5", "OpenCV"], // NEW
-      imagePath: "", 
-      url: "https://github.com/mischlox/face-touching-detector"
+      desc: "Desktop-App for real-time face touch detection using YOLOv5m (Libtorch C++) with QT5-GUI. Optimized for low-latency inference on standard CPU hardware.",      techStack: ["C++", "Qt5", "Libtorch", "YOLOv5", "OpenCV"],
+      titleImage: "/project_screenshots/ft-detector/screenshot.png", 
+      youtubeUrl: "https://www.youtube.com/watch?v=ZcUlyH9H7Ng",
+      url: "https://github.com/mischlox/face-touching-detector",
+      galleryImages: [
+        { path: "/project_screenshots/ft-detector/screenshot.png", desc: "Real-time face and hand detection visualization." },
+      ]
     },
     { 
       title: "AR Object Recognition", 
       cat: "Mobile / AI", 
       desc: "Android app for real-time object recognition and learning using the smartphone camera. Utilizes Continual Learning strategies with MobilenetV2 to learn new objects on the fly.",
-      techStack: ["Android (Java)", "TensorFlow Lite", "Computer Vision", "Continual Learning"], // NEW
-      imagePath: "",
-      url: "https://github.com/mischlox/AR-App-Object-Recognition"
+      techStack: ["Android (Java)", "TensorFlow Lite", "Computer Vision", "Continual Learning"],
+      titleImage: "/project_screenshots/arora/detecting.png",
+      url: "https://github.com/mischlox/AR-App-Object-Recognition",
+      galleryImages: [
+        { path: "/project_screenshots/arora/detecting.png", desc: "Screenshot of the AR overlay on recognized objects." },
+        { path: "/project_screenshots/arora/main-screen.png", desc: "The flow for on-device incremental model updates." },
+        { path: "/project_screenshots/arora/object-overview.png", desc: "Details on the MobilenetV2 architecture used for TFLite inference." },
+        { path: "/project_screenshots/arora/settings.png", desc: "Details on the MobilenetV2 architecture used for TFLite inference." },
+      ]
     },
     { 
       title: "Employee Time Tracking", 
       cat: "Software Engineering", 
       desc: "Full-stack desktop tool for employee time tracking, login systems, admin dashboard, and vacation management. Currently deployed and productive in 3 supermarket branches.",
-      techStack: ["C#", ".NET", "WPF", "SQL", "MVVM"], // NEW
-      imagePath: "", // Leave empty to test the placeholder
-      url: "" 
+      techStack: ["C#", ".NET", "WPF", "SQL", "MVVM"],
+      titleImage: "/images/time-tracking-main.jpg", // Renamed from imagePath
+      url: "", 
+      galleryImages: [
+        { path: "/images/time-tracker/admin-dashboard.png", desc: "The administrative dashboard for managing users and data." },
+        { path: "/images/time-tracker/login-screen.png", desc: "The employee login and clock-in interface." },
+        { path: "/images/time-tracker/mvvm-architecture.png", desc: "Diagram illustrating the MVVM pattern structure." },
+      ]
     },
   ],
   skills: {
