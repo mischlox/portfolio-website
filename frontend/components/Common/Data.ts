@@ -60,25 +60,35 @@ export const PROFILE = {
   ],
   projects: [
     { 
-        title: "Company Research Agent", 
-        cat: "AI / Agents", 
-        desc: "An automated research tool built with Google ADK. It performs web searches, summarizes findings, and generates detailed interview reports and tailored questions.",    },
+      title: "Company Research Agent", 
+      cat: "AI / Agents", 
+      desc: "An automated research tool built with Google ADK. It performs web searches, summarizes findings, and generates detailed interview reports and tailored questions.",
+      techStack: ["Google ADK", "Python", "LLMs", "Streamlit"], // NEW
+      imagePath: "", // NEW: Add your image paths here
+      url: "https://github.com/mischlox" // Update with actual link if available
+    },
     { 
       title: "Face Touching Detector", 
       cat: "Computer Vision", 
-      desc: "Desktop-App for real-time face touch detection using YOLOv5m (Libtorch C++) with QT5-GUI.",
+      desc: "Desktop-App for real-time face touch detection using YOLOv5m (Libtorch C++) with QT5-GUI. Optimized for low-latency inference on standard CPU hardware.",
+      techStack: ["C++", "Qt5", "Libtorch", "YOLOv5", "OpenCV"], // NEW
+      imagePath: "", 
       url: "https://github.com/mischlox/face-touching-detector"
     },
     { 
-      title: "Augmented Reality Object Recognition App", 
-      cat: "Mobile/AI", 
-      desc: "Android app for real-time object recognition and learning using the smartphone camera. Utilizes Continual Learning with MobilenetV2.",
+      title: "AR Object Recognition", 
+      cat: "Mobile / AI", 
+      desc: "Android app for real-time object recognition and learning using the smartphone camera. Utilizes Continual Learning strategies with MobilenetV2 to learn new objects on the fly.",
+      techStack: ["Android (Java)", "TensorFlow Lite", "Computer Vision", "Continual Learning"], // NEW
+      imagePath: "",
       url: "https://github.com/mischlox/AR-App-Object-Recognition"
     },
     { 
-      title: "Mitarbeiter-Zeiterfassungssystem", 
+      title: "Employee Time Tracking", 
       cat: "Software Engineering", 
-      desc: "Desktop tool for employee time tracking, login, admin dashboard, vacation/sick leave management, and PDF export. Productive in 3 supermarket branches.",
+      desc: "Full-stack desktop tool for employee time tracking, login systems, admin dashboard, and vacation management. Currently deployed and productive in 3 supermarket branches.",
+      techStack: ["C#", ".NET", "WPF", "SQL", "MVVM"], // NEW
+      imagePath: "", // Leave empty to test the placeholder
       url: "" 
     },
   ],
