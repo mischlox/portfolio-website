@@ -2,18 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Code, Github, ChevronLeft, ChevronRight, Layers, X, Maximize, Youtube } from 'lucide-react';
 import Image from 'next/image';
-import { PROFILE } from '../Common/Data'; // Assuming PROFILE is correctly imported
+import { PROFILE } from '../Common/Data';
 
 // Define Project and GalleryImage types based on the updated structure
-// (These types should ideally be in '../Common/Data' but are defined here for compilation clarity)
 type GalleryImage = { path: string; desc: string; };
 type ProjectType = typeof PROFILE.projects[0] & {
   titleImage?: string; 
   galleryImages?: GalleryImage[];
-  youtubeUrl?: string; 
+  youtubeUrl?: string;
+  huggingfaceUrl?: string;
 };
 
-// --- ProjectGalleryModal Component ---
+// --- ProjectGalleryModal Component (Kept as is for context) ---
 interface ProjectGalleryModalProps {
   project: ProjectType;
   onClose: () => void;
@@ -206,6 +206,8 @@ export const ProjectsSection: React.FC = () => {
   // state: [current page index, direction of movement]
   const [[page, direction], setPage] = useState([0, 0]);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  // NEW: State to track if the mouse is hovering over the carousel
+  const [isHovering, setIsHovering] = useState(false);
   
   const projects = PROFILE.projects as ProjectType[]; // Cast to ProjectType array
 
@@ -215,6 +217,9 @@ export const ProjectsSection: React.FC = () => {
   
   // Check for gallery availability using the new key
   const hasGallery = !!currentProject.galleryImages && currentProject.galleryImages.length > 0;
+  
+  // Check if there is a main image
+  const hasTitleImage = !!currentProject.titleImage;
 
 
   const paginate = (newDirection: number) => {
@@ -226,8 +231,8 @@ export const ProjectsSection: React.FC = () => {
   
   // Auto-scrolling useEffect
   useEffect(() => {
-    // Only start timer if gallery is closed
-    if (isGalleryOpen) return; 
+    // Only start timer if gallery is closed AND NOT hovering
+    if (isGalleryOpen || isHovering) return; 
 
     const timer = setInterval(() => {
       // Auto-scroll forward (direction 1)
@@ -236,7 +241,7 @@ export const ProjectsSection: React.FC = () => {
 
     // Cleanup interval on component unmount or when dependencies change
     return () => clearInterval(timer);
-  }, [page, projects.length, isGalleryOpen]);
+  }, [page, projects.length, isGalleryOpen, isHovering]); // ADDED: isHovering dependency
 
   // Function to open the gallery safely
   const openGallery = () => {
@@ -263,7 +268,12 @@ export const ProjectsSection: React.FC = () => {
         </div>
 
         {/* Carousel Container */}
-        <div className={`relative h-[600px] w-full overflow-hidden rounded-3xl bg-black/20 border border-white/5 shadow-2xl group ${isGalleryOpen ? 'pointer-events-none' : ''}`}>
+        <div 
+          className={`relative h-[600px] w-full overflow-hidden rounded-3xl bg-black/20 border border-white/5 shadow-2xl group ${isGalleryOpen ? 'pointer-events-none' : ''}`}
+          // NEW: Add mouse event handlers
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
 
             {/* 2. NEW PROJECT INDEX BADGE (Top Right) */}
             <div className="absolute top-0 right-0 z-30 m-4 px-4 py-1 bg-white/10 text-white/80 text-xs font-semibold rounded-full tracking-wider shadow-lg">
@@ -308,18 +318,17 @@ export const ProjectsSection: React.FC = () => {
               className="absolute inset-0 flex flex-col md:flex-row"
             >
 
-              {/* --- LEFT: Image / Placeholder (UPDATED) --- */}
-              <div
-                onClick={openGallery}
-                className={`w-full md:w-1/2 h-64 md:h-full relative bg-black/20 border-b md:border-b-0 md:border-r border-white/5 overflow-hidden group ${hasGallery ? 'cursor-pointer' : ''}`}
-              >
-                {currentProject.titleImage ? (
+              {/* --- LEFT: Image (Conditional Rendering) --- */}
+              {hasTitleImage && (
+                <div
+                  onClick={openGallery}
+                  className={`w-full md:w-1/2 h-64 md:h-full relative bg-black/20 border-b md:border-b-0 md:border-r border-white/5 overflow-hidden group ${hasGallery ? 'cursor-pointer' : ''}`}
+                >
                    <div className="relative w-full h-full">
                      <Image
-                       src={currentProject.titleImage}
+                       src={currentProject.titleImage!}
                        alt={currentProject.title}
                        fill
-                       // **CHANGE:** Use object-contain AND re-add the zoom effect
                        className="object-contain transition-transform duration-700 group-hover:scale-105"
                      />
                      {/* Overlay Gradient */}
@@ -331,17 +340,14 @@ export const ProjectsSection: React.FC = () => {
                         </div>
                      )}
                    </div>
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-600 bg-gradient-to-br from-gray-900 to-black">
-                    <div className="p-4 rounded-2xl bg-white/5 mb-4">
-                       <Layers size={48} className="opacity-50" />
-                    </div>
-                    <span className="text-sm font-medium tracking-widest uppercase opacity-50">Image Preview Unavailable</span>
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
+              {/* --- END LEFT: Image --- */}
 
-              <div className="w-full md:w-1/2 p-10 md:p-8 flex flex-col justify-center relative">
+              <div 
+                // Dynamic width: md:w-full if no image, md:w-1/2 if image is present
+                className={`w-full ${hasTitleImage ? 'md:w-1/2' : 'md:w-full'} p-10 md:p-8 flex flex-col justify-center relative`}
+              >
 
                 {/* Category Tag */}
                 <div className="flex items-center gap-2 mb-4">
@@ -411,7 +417,20 @@ export const ProjectsSection: React.FC = () => {
                         <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
                       </a>
                     )}
-
+                    {/* 3. Hugging Face/Test Out Button (NEW) */}
+                    {currentProject.huggingfaceUrl && (
+                      <a
+                        href={currentProject.huggingfaceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        // Using yellow/amber color scheme for distinction
+                        className="inline-flex items-center gap-3 px-6 py-3 bg-amber-600 text-white font-bold rounded-xl hover:bg-amber-500 transition-all group w-fit shadow-lg shadow-amber-900/20"
+                      >
+                        <Code size={15} /> 
+                        <span>Test Out Live Model</span>
+                        <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
