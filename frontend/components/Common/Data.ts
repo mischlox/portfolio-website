@@ -4,6 +4,7 @@ import tum_desc from "./tum-desc.md"
 import hsaalen_desc from "./hs-aalen-desc.md"
 import thesis_desc from "./thesis-desc.md"
 import hattec_desc from "./hattec-desc.md"
+import hensoldt_desc from "./hensoldt-desc.md"
 
 export type View = 'chat' | 'about' | 'projects' | 'contact';
 
@@ -27,7 +28,7 @@ export const PROFILE = {
   experience: [
     { 
       company: "TUM Institute of Automotive Technology, Garching", 
-      role: "Master Thesis (Grade: 1.0): Multimodal Pseudo-Labeling for 3D Object Detection in Autonomous Driving", 
+      role: "Master Thesis (Grade: 1.0) - Multimodal Pseudo-Labeling for 3D Object Detection in Autonomous Driving", 
       year: "11/2024 - 06/2025", 
       desc: thesis_desc,
       techStack: ["Python", "PyTorch", "OpenMMLab", "OpenCV", "Docker", "Git", "Linux"],
@@ -35,7 +36,7 @@ export const PROFILE = {
     },
     { 
       company: "HAT.tec GmbH, Neubiberg", 
-      role: "Werkstudent - Perception & Sensor Systems", 
+      role: "Working Student - Perception & Sensor Systems", 
       year: "10/2022 - 10/2024", 
       desc: hattec_desc,
       techStack: ["C++", "Python", "ROS2", "Qt", "OpenCV", "PyTorch", "TensorRT", "CMake", "Conan", "GoogleTest", "Linux", "Docker", "Git"],
@@ -43,16 +44,16 @@ export const PROFILE = {
     },
     { 
       company: "HENSOLDT Optronics GmbH, Oberkochen", 
-      role: "Praktikant / Werkstudent / Bachelor Thesis - Computer Vision & Image Processing", 
+      role: "Internship / Working Student / Bachelor Thesis - Computer Vision & Image Processing", 
       year: "09/2020 - 09/2022", 
-      desc: "Bachelor Thesis: Evaluation and optimization of Deep-Learning based object detection on embedded inference hardware (Note: 1.3). Setup of an Object-Detection-Demo with TensorRT, Deepstream, and Vitis AI. Implementation of hardware-accelerated image processing on FPGAs.",
-      techStack: ["C++", "CMake", "Buildroot", "TensorRT", "Deepstream", "GStreamer", "Python"],
+      desc: hensoldt_desc,
+      techStack: ["C++", "CMake", "Buildroot", "Python", "Docker", "OpenCV", "OpenVino", "Qt", "Linux", "TensorRT", "Vitis AI", "GStreamer", "MQTT"],
       logoPath: "/logos/hensoldt-logo.png"
     },
   ],
   education: [
     { 
-        school: "Technische Universität München", 
+        school: "Technical University of Munich", 
         degree: "Master of Science - Robotics, Cognition and Intelligence", 
         year: "10/2022 - 09/2025",
         desc: tum_desc,
@@ -60,8 +61,8 @@ export const PROFILE = {
         programUrl: "https://www.tum.de/studium/studienangebot/detail/robotics-cognition-intelligence-master-of-science-msc",
     }, 
     { 
-        school: "Hochschule Aalen", 
-        degree: "Bachelor of Science - Informatik / Software Engineering", 
+        school: "Aalen University", 
+        degree: "Bachelor of Science - Informatics / Software Engineering", 
         year: "10/2018 - 09/2022", 
         desc: hsaalen_desc,
         logoPath: "/logos/hs-aalen-logo.png",
