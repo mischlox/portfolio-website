@@ -1,17 +1,17 @@
 ## Program Profile
 
-This interdisciplinary Master's program (Informatics, Electrical/Mechanical Engineering) focuses on the shift of **robotics** into daily life, developing intelligent systems that use **Artificial Intelligence** to learn and adapt to unforeseen situations in human-robot cooperation.
+Interdisciplinary Master’s program in **Robotics, Cognition, and Intelligence**, combining **Informatics** with **Electrical and Mechanical Engineering**. The program focuses on intelligent robotic systems that perceive, learn, and act autonomously, with strong emphasis on **AI-driven perception**, **learning-based decision making**, and **human-robot interaction** in real-world scenarios such as autonomous driving.
 
-## Core Expertise and Skills Acquired 
+## Core Expertise and Skills Acquired
 
-Acquired a broad methodological and theoretical foundation in robotics, cognition, and intelligent autonomous systems. Key skills developed include:
+I developed a solid theoretical and practical foundation in robotics and intelligent systems, with a clear specialization in perception and learning:
 
-* Classic robot control, Perception, and Image Processing.
-* Artificial Intelligence (AI), Machine Learning, and Behavioral Control.
-* Sensory data analysis and fusion, programming, and human-robot interaction.
+* **Computer Vision & Perception:** Autonomous driving perception, multi-view geometry and 3D reconstruction, object detection, segmentation, and tracking.
+* **Sensor Data Processing:** Sensor fusion and image-based perception for autonomous systems.
+* **Machine Learning & AI:** Mathematical foundations of machine learning, including optimization, probability, and statistical learning theory, along with supervised and unsupervised methods.
+* **Real-Time Systems:** Timing constraints, scheduling, and reliability in safety-critical systems, complemented by parallel and concurrent programming concepts for performance-critical applications.
+* **Robotics & Control:** Classical robotics, kinematics, sensing, and system integration.
 
+## Professional Orientation
 
-
-## Professional Opportunities
-
-Career paths in **research and industry** are open across rapidly evolving sectors, including the **Automotive Sector**, Aerospace, Biomedical Engineering (e.g., wearable robotics/exoskeletons), Microelectronics, and Consumer Electronics.
+Prepared for research and industry roles in **robotics**, **autonomous driving**, and **intelligent systems**, with applications across automotive, aerospace, medical technology, and consumer electronics.

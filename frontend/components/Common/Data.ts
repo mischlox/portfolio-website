@@ -1,6 +1,9 @@
 // components/Data.ts
 
 import tum_desc from "./tum-desc.md"
+import hsaalen_desc from "./hs-aalen-desc.md"
+import thesis_desc from "./thesis-desc.md"
+import hattec_desc from "./hattec-desc.md"
 
 export type View = 'chat' | 'about' | 'projects' | 'contact';
 
@@ -24,18 +27,18 @@ export const PROFILE = {
   experience: [
     { 
       company: "TUM Institute of Automotive Technology, Garching", 
-      role: "Master Thesis: Multimodal Pseudo-Labeling for 3D Object Detection in Autonomous Driving (Note: 1.0)", 
+      role: "Master Thesis (Grade: 1.0): Multimodal Pseudo-Labeling for 3D Object Detection in Autonomous Driving", 
       year: "11/2024 - 06/2025", 
-      desc: "Development of a framework for sensor fusion of LiDAR and camera data to improve the 3D Pseudo-Labeling pipeline.",
-      techStack: ["Python", "PyTorch", "OpenMMLab", "Docker", "Git"],
+      desc: thesis_desc,
+      techStack: ["Python", "PyTorch", "OpenMMLab", "OpenCV", "Docker", "Git", "Linux"],
       logoPath: "/logos/tum-logo.svg"
     },
     { 
       company: "HAT.tec GmbH, Neubiberg", 
       role: "Werkstudent - Perception & Sensor Systems", 
       year: "10/2022 - 10/2024", 
-      desc: "Development of ROS2 applications for processing and analyzing various sensor data in an agile team. Training, evaluation, and optimization of an object detection model for aircraft.",
-      techStack: ["C++", "Python", "ROS2", "Qt", "PyTorch", "TensorRT"],
+      desc: hattec_desc,
+      techStack: ["C++", "Python", "ROS2", "Qt", "OpenCV", "PyTorch", "TensorRT", "CMake", "Conan", "GoogleTest", "Linux", "Docker", "Git"],
       logoPath: "/logos/hattec-logo.png"
     },
     { 
@@ -60,7 +63,7 @@ export const PROFILE = {
         school: "Hochschule Aalen", 
         degree: "Bachelor of Science - Informatik / Software Engineering", 
         year: "10/2018 - 09/2022", 
-        desc: "Example Description",
+        desc: hsaalen_desc,
         logoPath: "/logos/hs-aalen-logo.png",
         programUrl: "https://www.hs-aalen.de/de/courses/48/info" // ADDED LINK
     }, 
