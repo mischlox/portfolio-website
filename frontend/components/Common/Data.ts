@@ -70,6 +70,24 @@ export const PROFILE = {
     }, 
   ],
   projects: [
+    {
+      "title": "Portfolio Chat API (RAG Assistant)",
+      "cat": "Agentic AI / Full-Stack",
+      "desc": "An API powering the AI assistant currently running on this website. It uses a **LangGraph** state machine for complex, stateful conversation flow, performing Retrieval-Augmented Generation (RAG) against a private knowledge base to answer questions about Michael's professional career and integrates a FastMail contact service.",
+      "techStack": [
+        "FastAPI",
+        "LangGraph",
+        "LangChain",
+        "Chroma DB",
+        "Python",
+        "RAG"
+      ],
+      "titleImage": "",
+      "url": "https://github.com/mischlox/portfolio-website/tree/master/backend",
+      "huggingfaceUrl": "",
+      "galleryImages": [
+      ]
+    },
     { 
       title: "Company Research Agent", 
       cat: "AI / Agents", 
