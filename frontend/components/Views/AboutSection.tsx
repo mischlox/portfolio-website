@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Download, Eye, ArrowUpRight, ChevronDown } from 'lucide-react'; 
+import { Download, Eye, ArrowUpRight, ChevronDown, SquareCode, Brain, Cpu, Wrench } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 import { PROFILE } from '../Common/Data';
+
+const IconMap: Record<string, React.FC<any>> = {
+  SquareCode,
+  Brain,
+  Cpu,
+  Wrench,
+};
 
 interface TimelineItemProps {
   data: {
@@ -27,16 +34,16 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
 
   const handleMouseEnter = () => {
     if (!hasDescription) return;
-    
+
     // Clear any existing timeout just in case
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
-    
+
     // Set a new timeout to delay setting isHovered to true (200ms delay)
     hoverTimeoutRef.current = setTimeout(() => {
       setIsHovered(true);
-    }, 500); 
+    }, 500);
   };
 
   const handleMouseLeave = () => {
@@ -46,7 +53,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
       hoverTimeoutRef.current = null;
     }
     // Collapse the hover state immediately
-    setIsHovered(false); 
+    setIsHovered(false);
   };
 
   const toggleDescription = () => {
@@ -58,12 +65,12 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
       }
       // Toggle expanded state on click and ensure hover state is reset
       setIsExpanded(!isExpanded);
-      setIsHovered(false); 
+      setIsHovered(false);
     }
   };
 
   // Combine click expanded state with hover state for animation and visual indicator
-  const currentExpandedState = hasDescription && (isExpanded || isHovered); 
+  const currentExpandedState = hasDescription && (isExpanded || isHovered);
 
   // Clean up timeout when component unmounts
   React.useEffect(() => {
@@ -80,15 +87,15 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
       <span className="absolute -left-[37px] top-4 w-3 h-3 rounded-full bg-[#050505] border-2 border-gray-700 group-hover:border-blue-500 group-hover:scale-125 transition-all z-10"></span>
 
       {/* The Black Box Styling applied to the content */}
-      <div 
+      <div
         onClick={toggleDescription}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`bg-black/20 p-6 rounded-2xl border border-white/5 transition-colors flex items-start gap-4 
+        className={`bg-black/20 p-6 rounded-2xl border border-white/5 transition-colors flex items-start gap-4
         ${hasDescription ? 'cursor-pointer hover:border-white/20' : ''}`}
-        tabIndex={hasDescription ? 0 : -1} 
+        tabIndex={hasDescription ? 0 : -1}
         role={hasDescription ? "button" : undefined}
-        onKeyDown={(e) => { 
+        onKeyDown={(e) => {
           if (hasDescription && (e.key === 'Enter' || e.key === ' ')) {
             e.preventDefault();
             toggleDescription();
@@ -118,7 +125,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
 
             {data.programUrl && ( // Education Link
               <a
-                onClick={(e) => e.stopPropagation()} 
+                onClick={(e) => e.stopPropagation()}
                 href={data.programUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -132,15 +139,15 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
 
           {/* Title (Role/School) and Indicator Icon */}
           <div className="flex justify-between items-center mb-1">
-            <div 
+            <div
               className={`text-lg font-bold transition-colors ${hasDescription ? 'text-white group-hover:text-blue-400' : 'text-white'}`}
             >
               {data.title}
             </div>
-            
+
             {/* Indicator Icon with text label */}
             {hasDescription && (
-              <div 
+              <div
                 aria-expanded={currentExpandedState}
                 className="text-blue-400 p-1 flex-shrink-0 flex items-center gap-1"
               >
@@ -148,13 +155,13 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
                 <span className="text-xs font-medium uppercase tracking-wider hidden sm:inline">
                   {currentExpandedState ? 'Hide Details' : 'View Details'}
                 </span>
-                
+
                 {/* Chevron icon */}
                 <ChevronDown size={20} className={`transform transition-transform duration-300 ${currentExpandedState ? 'rotate-180' : 'rotate-0'}`} />
               </div>
             )}
           </div>
-          
+
           {/* Subtitle (Company/Degree) */}
           <div className="text-gray-400 mb-3">{data.subtitle}</div>
 
@@ -165,7 +172,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
                 <span
                   key={techIndex}
                   className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-300 transition-all cursor-default hover:bg-white/10"
-                  onClick={(e) => e.stopPropagation()} 
+                  onClick={(e) => e.stopPropagation()}
                 >
                   {tech}
                 </span>
@@ -178,7 +185,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
             <motion.div
               id={`description-${data.title.replace(/\s/g, '-')}`}
               initial={false}
-              animate={{ height: currentExpandedState ? 'auto' : 0, opacity: currentExpandedState ? 1 : 0 }} 
+              animate={{ height: currentExpandedState ? 'auto' : 0, opacity: currentExpandedState ? 1 : 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
@@ -212,13 +219,27 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
   );
 };
 
-// Define animation variant for staggered children (for continuity)
-const itemVariant = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+// Define animation variant for individual skill tags
+const tagItemVariant = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
+// Define animation variant for the container of skill tags
+const tagContainerVariant = {
+  visible: {
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
+    }
+  },
 };
 
 export const AboutSection: React.FC = () => {
+  const categories = Object.keys(PROFILE.skills);
+  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const activeSkills = PROFILE.skills[activeCategory]?.skills || [];
+
   return (
     <div className="space-y-16 py-10">
 
@@ -254,35 +275,63 @@ export const AboutSection: React.FC = () => {
       <section>
         <h3 className="text-sm font-medium text-gray-500 uppercase tracking-widest mb-6">Technical Arsenal</h3>
 
-        {/* Responsive Grid Container for Skill Columns */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {Object.entries(PROFILE.skills).map(([category, skills]) => (
-            <div key={category} className="h-full flex flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-3 bg-black/20 rounded-xl border border-white/10 overflow-hidden">
 
-              {/* Category Title */}
-              <h4 className="text-sm font-semibold text-white mb-4 pb-2 border-b border-white/10">{category}</h4>
+          {/* Column 1: Category Navigation (Left Panel) */}
+          <div className="p-6 border-b border-white/10 md:border-b-0 md:border-r md:h-full">
+            <h4 className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">Focus Areas</h4>
+            <div className="flex flex-col space-y-2">
+              {categories.map((category) => {
+                const iconName = PROFILE.skills[category].iconName;
+                const IconComponent = IconMap[iconName];
 
-              {/* Flex container for the labels, allowing wrap if necessary */}
-              <div className="flex flex-wrap gap-2">
-                {skills.map((s, i) => (
-                  <motion.div
-                    key={s}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-gray-300 transition-all cursor-default hover:bg-white/10"
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`text-left px-4 py-2 rounded-lg transition-all text-sm font-semibold transform hover:scale-[1.01] flex items-center
+                      ${category === activeCategory
+                        ? 'bg-blue-600/30 text-blue-300 shadow-inner shadow-blue-700/30'
+                        : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                      }`}
                   >
-                    {s}
-                  </motion.div>
-                ))}
-              </div>
+                    {/* --- ADDED ICON RENDERING --- */}
+                    {IconComponent && <IconComponent size={16} className="mr-3 flex-shrink-0" />}
+                    {category}
+                  </button>
+                );
+              })}
             </div>
-          ))}
+          </div>
+
+          {/* Column 2/3: Active Skills Display (Right Panel) */}
+          <div className="md:col-span-2 p-6">
+            <h4 className="text-lg font-bold text-white mb-4">{activeCategory}</h4>
+
+            {/* Skill Tags: Use the dedicated tagContainerVariant */}
+            <motion.div
+              key={activeCategory} // Key change forces animation reset when category changes
+              initial="hidden"
+              animate="visible"
+              variants={tagContainerVariant}
+              className="flex flex-wrap gap-3 min-h-[100px]"
+            >
+              {activeSkills.map((s, i) => (
+                <motion.div
+                  key={s}
+                  variants={tagItemVariant} // Use the dedicated tagItemVariant
+                  // Apply a slight animation for the tags when they appear
+                  className="flex items-center h-7 px-4 bg-blue-500/10 border border-blue-500/50 rounded-lg text-sm font-medium text-blue-300 transition-all cursor-default hover:bg-blue-500/20 hover:scale-[1.02]"                >
+                  {s}
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Career History and Education sections container */}
-      <motion.div variants={itemVariant} className="space-y-16">
+      {/* Career History and Education sections container (motion.div removed) */}
+      <div className="space-y-16">
 
         {/* Education Section */}
         <section>
@@ -322,7 +371,7 @@ export const AboutSection: React.FC = () => {
             ))}
           </div>
         </section>
-      </motion.div>
+      </div>
     </div>
   );
 };

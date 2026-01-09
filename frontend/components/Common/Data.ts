@@ -24,7 +24,7 @@ export const PROFILE = {
   email: "mschlosser.se@gmail.com",
   role: "Software Engineer",
   tagline: "Software Engineer with focus on AI-based image processing and Embedded Systems.",
-  about: "Software Engineer focusing on AI-supported image processing, Embedded Systems, and Python/C++ development. Experience in conception, implementation, and integration of software on various hardware platforms, as well as in data preparation, analysis, and documentation. Familiar with agile software development and interdisciplinary teamwork.",
+  about: "Software Engineer specializing in Computer Vision, AI Perception and Real-Time Embedded Systems. I design and deploy high-performance, real-time solutions using C++ and Python, with expertise in deep learning, computer vision, robotics, hardware optimization and embedded Linux. My background includes an M.Sc. from TUM with a focus on perception for autonomous driving and four years of industry experience building robust, scalable systems on edge devices.",
   experience: [
     { 
       company: "TUM Institute of Automotive Technology, Garching", 
@@ -74,19 +74,18 @@ export const PROFILE = {
       title: "Company Research Agent", 
       cat: "AI / Agents", 
       desc: "An automated research tool built with Google ADK. It performs web searches, summarizes findings, and generates detailed interview reports and tailored questions.",
-      techStack: ["Google ADK", "Python", "LLMs", "Streamlit"],
-      titleImage: "/images/company-research-agent-main.jpg", 
+      techStack: ["Google ADK", "Agentic AI", "Python", "LLMs"],
+      titleImage: "", 
       url: "https://github.com/mischlox",
+      huggingfaceUrl: "https://huggingface.co/spaces/mischlox/company-researcher",
       galleryImages: [
-        { path: "/images/agent/workflow-diagram.png", desc: "Conceptual workflow diagram of the research agent." },
-        { path: "/images/agent/streamlit-ui.png", desc: "Screenshot of the Streamlit user interface." },
-        { path: "/images/agent/report-snippet.jpg", desc: "A snippet from a generated interview report." },
       ]
     },
     { 
       title: "Face Touching Detector", 
       cat: "Computer Vision", 
-      desc: "Desktop-App for real-time face touch detection using YOLOv5m (Libtorch C++) with QT5-GUI. Optimized for low-latency inference on standard CPU hardware.",      techStack: ["C++", "Qt5", "Libtorch", "YOLOv5", "OpenCV"],
+      desc: "Desktop-App for real-time face touch detection using YOLOv5m (Libtorch C++) with QT5-GUI. Optimized for low-latency inference on standard CPU hardware.",
+      techStack: ["C++", "Qt5", "Libtorch", "YOLOv5", "OpenCV"],
       titleImage: "/project_screenshots/ft-detector/screenshot.png", 
       youtubeUrl: "https://www.youtube.com/watch?v=ZcUlyH9H7Ng",
       url: "https://github.com/mischlox/face-touching-detector",
@@ -98,7 +97,7 @@ export const PROFILE = {
       title: "AR Object Recognition", 
       cat: "Mobile / AI", 
       desc: "Android app for real-time object recognition and learning using the smartphone camera. Utilizes Continual Learning strategies with MobilenetV2 to learn new objects on the fly.",
-      techStack: ["Android (Java)", "TensorFlow Lite", "Computer Vision", "Continual Learning"],
+      techStack: ["Android SDK", "Java", "TensorFlow Lite", "Computer Vision", "Continual Learning"],
       titleImage: "/project_screenshots/arora/detecting.png",
       url: "https://github.com/mischlox/AR-App-Object-Recognition",
       galleryImages: [
@@ -112,21 +111,21 @@ export const PROFILE = {
       title: "Employee Time Tracking", 
       cat: "Software Engineering", 
       desc: "Full-stack desktop tool for employee time tracking, login systems, admin dashboard, and vacation management. Currently deployed and productive in 3 supermarket branches.",
-      techStack: ["C#", ".NET", "WPF", "SQL", "MVVM"],
-      titleImage: "/images/time-tracking-main.jpg", // Renamed from imagePath
+      techStack: ["Python", "Eel", "SQLite", "Javascript", "HTML", "CSS"],
+      // titleImage: "/images/time-tracking-main.jpg", // Renamed from imagePath
       url: "", 
       galleryImages: [
-        { path: "/images/time-tracker/admin-dashboard.png", desc: "The administrative dashboard for managing users and data." },
-        { path: "/images/time-tracker/login-screen.png", desc: "The employee login and clock-in interface." },
-        { path: "/images/time-tracker/mvvm-architecture.png", desc: "Diagram illustrating the MVVM pattern structure." },
+        // { path: "/images/time-tracker/admin-dashboard.png", desc: "The administrative dashboard for managing users and data." },
+        // { path: "/images/time-tracker/login-screen.png", desc: "The employee login and clock-in interface." },
+        // { path: "/images/time-tracker/mvvm-architecture.png", desc: "Diagram illustrating the MVVM pattern structure." },
       ]
     },
   ],
   skills: {
-    "Programming Languages": ["C++", "Python", "TypeScript"],
-    "AI/ML & Vision": ["PyTorch", "Deep Learning", "(3D) Computer Vision", "OpenCV", "TensorRT"],
-    "Robotics & Embedded": ["ROS2", "Embedded Systems", "Linux", "Docker", "Buildroot"],
-    "Tools & Workflow": ["Git", "FastAPI", "Next.js", "Agile Development", "CMake"]
+    "Programming Languages": { iconName: "SquareCode", skills: ["C++", "Python", "Java", "Bash", "C", "JavaScript"] },
+    "AI/ML & Vision": { iconName: "Brain", skills: ["PyTorch", "Deep Learning", "(3D) Computer Vision", "OpenCV", "TensorRT"] },
+    "Robotics & Embedded": { iconName: "Cpu", skills: ["ROS2", "Embedded Systems", "Linux", "Docker", "Buildroot"] },
+    "Tools & Workflow": { iconName: "Wrench", skills: ["Git", "GoogleTest / PyTest", "Qt", "Agile Development", "CMake"] }
   },
   social: {
     linkedin: "https://de.linkedin.com/in/michael-schlosser-dev",
