@@ -251,27 +251,29 @@ export const ProjectsSection: React.FC = () => {
 
   return (
     <>
-      <div className="py-10 flex flex-col h-full justify-center">
-        
-        {/* Header */}
-        <div className="flex justify-between items-end mb-8 md:mb-12">
+      <div className="flex flex-col h-full justify-center">
+
+        {/* Header - Simplified to just the main title */}
+        <div className="p-10 flex justify-start items-end mb-8 md:mb-12">
           <div>
             <h3 className="md:text-6xl font-bold tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
               My Project Portfolio
             </h3>
-            <p className="text-gray-400 text-sm md:text-base">
-              Project {projectIndex + 1} of {projects.length}
-            </p>
           </div>
         </div>
 
         {/* Carousel Container */}
-        <div className={`relative h-[600px] w-full overflow-hidden rounded-3xl bg-[#0F0F0F] border border-white/5 shadow-2xl group ${isGalleryOpen ? 'pointer-events-none' : ''}`}>
-          
+        <div className={`relative h-[600px] w-full overflow-hidden rounded-3xl bg-black/20 border border-white/5 shadow-2xl group ${isGalleryOpen ? 'pointer-events-none' : ''}`}>
+
+            {/* 2. NEW PROJECT INDEX BADGE (Top Right) */}
+            <div className="absolute top-0 right-0 z-30 m-4 px-4 py-1 bg-white/10 text-white/80 text-xs font-semibold rounded-full tracking-wider shadow-lg">
+                Project {projectIndex + 1} of {projects.length}
+            </div>
+
           {/* Absolute Navigation Buttons (Left/Right) */}
           <div className="absolute inset-0 z-20 flex items-center justify-between pointer-events-none">
             {/* Left Button */}
-            <button 
+            <button
               onClick={() => paginate(-1)}
               className="p-4 ml-4 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 pointer-events-auto shadow-xl"
               aria-label="Previous project"
@@ -279,9 +281,9 @@ export const ProjectsSection: React.FC = () => {
             >
               <ChevronLeft size={24} />
             </button>
-            
+
             {/* Right Button */}
-            <button 
+            <button
               onClick={() => paginate(1)}
               className="p-4 mr-4 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 pointer-events-auto shadow-xl"
               aria-label="Next project"
@@ -290,7 +292,7 @@ export const ProjectsSection: React.FC = () => {
               <ChevronRight size={24} />
             </button>
           </div>
-          
+
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={page}
@@ -305,16 +307,16 @@ export const ProjectsSection: React.FC = () => {
               }}
               className="absolute inset-0 flex flex-col md:flex-row"
             >
-              
+
               {/* --- LEFT: Image / Placeholder (UPDATED) --- */}
-              <div 
-                onClick={openGallery} 
+              <div
+                onClick={openGallery}
                 className={`w-full md:w-1/2 h-64 md:h-full relative bg-black/20 border-b md:border-b-0 md:border-r border-white/5 overflow-hidden group ${hasGallery ? 'cursor-pointer' : ''}`}
               >
-                {currentProject.titleImage ? ( 
+                {currentProject.titleImage ? (
                    <div className="relative w-full h-full">
-                     <Image 
-                       src={currentProject.titleImage} 
+                     <Image
+                       src={currentProject.titleImage}
                        alt={currentProject.title}
                        fill
                        // **CHANGE:** Use object-contain AND re-add the zoom effect
@@ -339,9 +341,8 @@ export const ProjectsSection: React.FC = () => {
                 )}
               </div>
 
-              {/* --- RIGHT: Content (No changes needed) --- */}
-              <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative">
-                
+              <div className="w-full md:w-1/2 p-10 md:p-8 flex flex-col justify-center relative">
+
                 {/* Category Tag */}
                 <div className="flex items-center gap-2 mb-4">
                    <span className="h-px w-8 bg-blue-500"></span>
@@ -365,8 +366,8 @@ export const ProjectsSection: React.FC = () => {
                   <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Technologies</h4>
                   <div className="flex flex-wrap gap-2">
                     {currentProject.techStack?.map((tech, i) => (
-                      <span 
-                        key={i} 
+                      <span
+                        key={i}
                         className="px-3 py-1.5 text-xs font-medium text-gray-300 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors cursor-default"
                       >
                         {tech}
@@ -378,14 +379,14 @@ export const ProjectsSection: React.FC = () => {
                 {/* Github Button */}
                 <div className="mt-auto pt-6 border-t border-white/5">
                   <div className="flex flex-wrap gap-4">
-                    
+
                     {/* 1. GitHub Button (existing logic) */}
                     {currentProject.url ? (
-                      <a 
-                        href={currentProject.url} 
+                      <a
+                        href={currentProject.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 transition-all group w-fit shadow-lg shadow-blue-900/20"
+                        className="inline-flex items-center gap-3 px-6 py-3 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-500 transition-all group w-fit shadow-lg shadow-blue-900/20"
                       >
                         <Github size={20} />
                         <span>View Project on GitHub</span>
@@ -396,16 +397,16 @@ export const ProjectsSection: React.FC = () => {
                           <Code size={16} /> Source Code Unavailable
                        </div>
                     )}
-                    
-                    {/* 2. YouTube Button (newly added logic) */}
+
+                    {/* 2. YouTube Button */}
                     {currentProject.youtubeUrl && (
-                      <a 
-                        href={currentProject.youtubeUrl} 
+                      <a
+                        href={currentProject.youtubeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-500 transition-all group w-fit shadow-lg shadow-red-900/20"
+                        className="inline-flex items-center gap-3 px-6 py-3 bg-red-800 text-white font-bold rounded-xl hover:bg-red-500 transition-all group w-fit shadow-lg shadow-red-900/20"
                       >
-                        <Youtube size={15} /> 
+                        <Youtube size={15} />
                         <span>Watch Live Demo</span>
                         <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
                       </a>
