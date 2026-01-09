@@ -1,14 +1,20 @@
 # main.py
 import os
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
 from app.email_api import router as email_router
 from portfolio_assistant.core.assistant import PortfolioAssistant
+
+limiter = Limiter(key_func=get_remote_address)
 
 DEV_MODE = os.getenv("APP_ENV") == "dev"
 print(f"Server starting in: {'DEV (Ollama)' if DEV_MODE else 'PROD (OpenRouter)'} Mode")
@@ -28,6 +34,8 @@ async def lifespan(app: FastAPI):
     print("Shutting down Portfolio Assistant...")
 
 app = FastAPI(title="Portfolio Chat API", lifespan=lifespan)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.include_router(email_router)
 
@@ -53,14 +61,15 @@ def read_root():
     return {"status": "ok", "mode": mode}
 
 @app.post("/chat")
-async def chat_endpoint(request: ChatRequest):
+@limiter.limit("30/day")
+async def chat_endpoint(request: Request, chat_data: ChatRequest): # Slowapi needs request object
     if not portfolio_assistant:
         raise HTTPException(status_code=500, detail="Assistant not initialized")
 
     # Pass the request to the assistant
     result = await portfolio_assistant.chat(
-        user_input=request.message,
-        history=[m.dict() for m in request.history]
+        user_input=chat_data.message,
+        history=[m.dict() for m in chat_data.history]
     )
     response_text = result["messages"][-1].content
     return {

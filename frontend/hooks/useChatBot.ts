@@ -48,6 +48,24 @@ I can also navigate this website for you.\n\nHow can I help you today?`
                 }),
             });
 
+            if (response.status === 429) {
+                // Extract Retry-After header for more specific message
+                const retryAfter = response.headers.get('Retry-After');
+                let retryMessage = '';
+                if (retryAfter) {
+                    const hours = Math.ceil(parseInt(retryAfter, 10) / 3600);
+                    retryMessage = `You have reached the daily chat limit (${hours} hours remaining).`;
+                } else {
+                    retryMessage = 'You have reached the daily chat limit.';
+                }
+
+                setMessages(prev => [...prev, { 
+                    role: 'ai', 
+                    text: `⚠️ **Rate Limit Exceeded.** ${retryMessage} Please try again tomorrow.` 
+                }]);
+                return; // Stop processing the request
+            }
+
             if (!response.ok) {
                 // Attempt to read error message if available
                 const errorDetail = await response.text();

@@ -71,7 +71,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
           // The size/weight/margin/min-height will be handled internally by RotatingText.
           className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500"
         />
-        <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-3xl mx-auto mt-10">
+        <div className="flex flex-wrap justify-center gap-2 mb-2 max-w-3xl mx-auto mt-10">
           {["Computer Vision", "Deep Learning", "Embedded Systems", "C++", "Python", "Agentic AI"].map((label) => (
             <div 
               key={label}
