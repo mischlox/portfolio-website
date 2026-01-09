@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Sparkles, Terminal } from 'lucide-react';
+import { ArrowUpRight, Sparkles, Terminal, Github } from 'lucide-react'; // ADDED Github
 import Image from 'next/image';
 import { PROFILE } from '../Common/Data';
 import { RotatingText } from './RotatingText';
@@ -193,6 +193,23 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
           </div>
         </div>
       </motion.div>
+
+      {/* --- ADDED REPO LINK BELOW CHAT WINDOW --- */}
+      <motion.a
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        href="https://github.com/mischlox/portfolio-website/tree/master/backend"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-4 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-100 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white transition-all shadow-md"
+      >
+        <Github size={16} />
+        Check out the code for this assistant on GitHub
+        <ArrowUpRight size={14} />
+      </motion.a>
+      {/* ------------------------------------------- */}
+
     </div>
   );
 };
