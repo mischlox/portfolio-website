@@ -174,7 +174,7 @@ class PortfolioAssistant:
         
         graph = graph_builder.compile()
         if self.dev_mode:
-            graph.get_graph().draw_mermaid_png(output_file_path="assistant_graph.png")
+            graph.get_graph().draw_mermaid_png(output_file_path="res/assistant_graph.png")
         return graph
 
     async def chat(self, user_input: str, history: List[dict]) -> State:
