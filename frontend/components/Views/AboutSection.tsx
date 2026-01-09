@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Download, Eye, ArrowUpRight, ChevronDown } from 'lucide-react'; 
-import { PROFILE } from '../Common/Data';
+import ReactMarkdown from 'react-markdown';
 
+import { PROFILE } from '../Common/Data';
 interface TimelineItemProps {
   data: {
     year: string;
@@ -20,15 +21,11 @@ interface TimelineItemProps {
 }
 
 const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) => {
-  // State to manage the expanded/collapsed state of the description
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // Check if description exists
   const hasDescription = !!data.desc; 
 
-  // Toggle function - now called by clicking the container
   const toggleDescription = () => {
-    if (hasDescription) { // Only toggle if a description exists
+    if (hasDescription) {
       setIsExpanded(!isExpanded);
     }
   };
@@ -41,7 +38,6 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
       {/* The Black Box Styling applied to the content */}
       <div 
         onClick={toggleDescription}
-        // Use group-focus/hover to make the interactivity obvious
         className={`bg-black/20 p-6 rounded-2xl border border-white/5 transition-colors flex items-start gap-4 
         ${hasDescription ? 'cursor-pointer hover:border-white/20' : ''}`}
         tabIndex={hasDescription ? 0 : -1} 
@@ -131,19 +127,32 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
             </div>
           )}
 
-          {/* Description (Conditionally rendered and animated) */}
+          {/* CORRECT DESCRIPTION (ReactMarkdown) */}
           {hasDescription && (
             <motion.div
               id={`description-${data.title.replace(/\s/g, '-')}`}
               initial={false}
-              // Set height to 0 for collapsed, 'auto' for expanded
               animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }} 
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <p className="text-sm text-gray-300 leading-relaxed pt-2">
-                {data.desc}
-              </p>
+              <div className="text-sm text-gray-300 leading-relaxed pt-2">
+                <ReactMarkdown
+                  components={{
+                    // Apply Tailwind classes to rendered elements
+                    p: ({ node, ...props }) => <p className="mb-2" {...props} />,
+                    strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
+                    ul: ({ node, ...props }) => (
+                      <ul className="list-disc list-inside space-y-1 pl-4 mb-4" {...props} />
+                    ),
+                    h1: ({ node, ...props }) => <h3 className="text-lg font-bold mt-4 mb-2 text-white" {...props} />,
+                    h2: ({ node, ...props }) => <h4 className="text-base font-bold mt-3 mb-1 text-white" {...props} />,
+                    h3: ({ node, ...props }) => <h5 className="text-sm font-bold mt-3 mb-1 text-white" {...props} />,
+                   }}
+                >
+                  {data.desc || ''}
+                </ReactMarkdown>
+              </div>
             </motion.div>
           )}
         </div>

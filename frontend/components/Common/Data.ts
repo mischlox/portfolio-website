@@ -1,5 +1,7 @@
 // components/Data.ts
 
+import tum_desc from "./tum-desc.md"
+
 export type View = 'chat' | 'about' | 'projects' | 'contact';
 
 // The NavItems now only use string identifiers for icons
@@ -16,7 +18,6 @@ export const PROFILE = {
   last_name: "Schlosser",
   full_name: "Michael Schlosser",
   email: "mschlosser.se@gmail.com",
-  // ... rest of the PROFILE data ...
   role: "Software Engineer",
   tagline: "Software Engineer with focus on AI-based image processing and Embedded Systems.",
   about: "Software Engineer focusing on AI-supported image processing, Embedded Systems, and Python/C++ development. Experience in conception, implementation, and integration of software on various hardware platforms, as well as in data preparation, analysis, and documentation. Familiar with agile software development and interdisciplinary teamwork.",
@@ -51,9 +52,9 @@ export const PROFILE = {
         school: "Technische Universität München", 
         degree: "Master of Science - Robotics, Cognition and Intelligence", 
         year: "10/2022 - 09/2025",
-        desc: "Example Description",
+        desc: tum_desc,
         logoPath: "/logos/tum-logo.svg",
-        programUrl: "https://www.tum.de/studium/studienangebot/detail/robotics-cognition-intelligence-master-of-science-msc"
+        programUrl: "https://www.tum.de/studium/studienangebot/detail/robotics-cognition-intelligence-master-of-science-msc",
     }, 
     { 
         school: "Hochschule Aalen", 
