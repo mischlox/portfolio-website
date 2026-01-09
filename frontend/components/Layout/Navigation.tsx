@@ -49,7 +49,7 @@ const NavTab = ({ label, view, current, set, iconName }: { label: string, view: 
 export const Navigation: React.FC<NavigationProps> = ({ scrolled, activeView, setActiveView }) => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${
-      scrolled ? 'bg-black/80 backdrop-blur-xl border-white/10 py-4 shadow-2xl' : 'bg-transparent border-transparent py-6'
+      scrolled ? 'bg-black/70 backdrop-blur-xl border-white/10 py-4 shadow-2xl' : 'bg-transparent border-transparent py-6'
     }`}>
       <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
         <div 
