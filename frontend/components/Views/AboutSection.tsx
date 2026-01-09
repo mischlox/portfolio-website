@@ -1,5 +1,3 @@
-// components/Views/AboutSection.tsx
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -7,6 +5,7 @@ import { Download, Eye, ArrowUpRight, ChevronDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 import { PROFILE } from '../Common/Data';
+
 interface TimelineItemProps {
   data: {
     year: string;
@@ -22,13 +21,58 @@ interface TimelineItemProps {
 
 const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const hasDescription = !!data.desc; 
+  const [isHovered, setIsHovered] = useState(false);
+  const hasDescription = !!data.desc;
+  const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null); // Ref to hold the timeout ID
+
+  const handleMouseEnter = () => {
+    if (!hasDescription) return;
+    
+    // Clear any existing timeout just in case
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    
+    // Set a new timeout to delay setting isHovered to true (200ms delay)
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsHovered(true);
+    }, 500); 
+  };
+
+  const handleMouseLeave = () => {
+    // Clear the timeout to prevent delayed expansion if the mouse leaves quickly
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    // Collapse the hover state immediately
+    setIsHovered(false); 
+  };
 
   const toggleDescription = () => {
     if (hasDescription) {
+      // Clear timeout on click as well
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+      // Toggle expanded state on click and ensure hover state is reset
       setIsExpanded(!isExpanded);
+      setIsHovered(false); 
     }
   };
+
+  // Combine click expanded state with hover state for animation and visual indicator
+  const currentExpandedState = hasDescription && (isExpanded || isHovered); 
+
+  // Clean up timeout when component unmounts
+  React.useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="relative group">
@@ -38,6 +82,8 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
       {/* The Black Box Styling applied to the content */}
       <div 
         onClick={toggleDescription}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className={`bg-black/20 p-6 rounded-2xl border border-white/5 transition-colors flex items-start gap-4 
         ${hasDescription ? 'cursor-pointer hover:border-white/20' : ''}`}
         tabIndex={hasDescription ? 0 : -1} 
@@ -95,16 +141,16 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
             {/* Indicator Icon with text label */}
             {hasDescription && (
               <div 
-                aria-expanded={isExpanded}
+                aria-expanded={currentExpandedState}
                 className="text-blue-400 p-1 flex-shrink-0 flex items-center gap-1"
               >
                 {/* Text label that changes based on state */}
                 <span className="text-xs font-medium uppercase tracking-wider hidden sm:inline">
-                  {isExpanded ? 'Hide Details' : 'View Details'}
+                  {currentExpandedState ? 'Hide Details' : 'View Details'}
                 </span>
                 
                 {/* Chevron icon */}
-                <ChevronDown size={20} className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`} />
+                <ChevronDown size={20} className={`transform transition-transform duration-300 ${currentExpandedState ? 'rotate-180' : 'rotate-0'}`} />
               </div>
             )}
           </div>
@@ -132,7 +178,7 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
             <motion.div
               id={`description-${data.title.replace(/\s/g, '-')}`}
               initial={false}
-              animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }} 
+              animate={{ height: currentExpandedState ? 'auto' : 0, opacity: currentExpandedState ? 1 : 0 }} 
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden"
             >
@@ -142,12 +188,17 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ data, isCareer = false }) =
                     // Apply Tailwind classes to rendered elements
                     p: ({ node, ...props }) => <p className="mb-2" {...props} />,
                     strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
+                    // List with bottom margin for separation
                     ul: ({ node, ...props }) => (
                       <ul className="list-disc list-inside space-y-1 pl-4 mb-4" {...props} />
                     ),
-                    h1: ({ node, ...props }) => <h3 className="text-lg font-bold mt-4 mb-2 text-white" {...props} />,
-                    h2: ({ node, ...props }) => <h4 className="text-base font-bold mt-3 mb-1 text-white" {...props} />,
-                    h3: ({ node, ...props }) => <h5 className="text-sm font-bold mt-3 mb-1 text-white" {...props} />,
+                    li: ({ node, ...props }) => (
+                      <li className="ml-2 text-gray-300" {...props} />
+                    ),
+                    // Headings mapped to h4, h5, h6 for component context
+                    h1: ({ node, ...props }) => <h4 className="text-lg font-bold mt-4 mb-2 text-white" {...props} />,
+                    h2: ({ node, ...props }) => <h5 className="text-base font-bold mt-3 mb-1 text-white" {...props} />,
+                    h3: ({ node, ...props }) => <h6 className="text-sm font-bold mt-3 mb-1 text-white" {...props} />,
                    }}
                 >
                   {data.desc || ''}
