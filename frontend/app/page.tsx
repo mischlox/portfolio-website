@@ -5,28 +5,20 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { View, PROFILE } from '@/components/Common/Data';
-import { ChevronDown, Check } from 'lucide-react'; // Import Check icon for notification
+import { ChevronDown, Check } from 'lucide-react';
 
-// Import Layout Components
 import { Navigation } from '@/components/Layout/Navigation';
 
-// Import View Components
 import { ChatSection } from '@/components/Views/ChatSection';
 import { AboutSection } from '@/components/Views/AboutSection';
 import { ProjectsSection } from '@/components/Views/ProjectsSection';
 import { ContactSection } from '@/components/Views/ContactSection';
 
-
-// --- ANIMATED SCROLL DOWN TEXT COMPONENT (FIXED POSITIONING) ---
 const AnimatedScrollArrow: React.FC<{ targetRef: React.RefObject<HTMLDivElement>; active: boolean }> = ({ targetRef, active }) => {
-  
-  // FIX: Define a constant for the fixed header height (roughly matching the pt-32 on <main>)
-  const HEADER_HEIGHT = 128; // Tailwind pt-32 is 8rem = 128px
+  const HEADER_HEIGHT = 128;
 
   const handleClick = () => {
     if (targetRef.current) {
-      // Calculate the scroll position: 
-      // Current top position of the target element + current scroll position - header height
       const targetTop = targetRef.current.getBoundingClientRect().top + window.scrollY;
       const scrollPosition = targetTop - HEADER_HEIGHT;
       
@@ -42,7 +34,7 @@ const AnimatedScrollArrow: React.FC<{ targetRef: React.RefObject<HTMLDivElement>
       {active && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: [0, 10, 0] }} // Subtle bounce animation
+          animate={{ opacity: 1, y: [0, 10, 0] }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ 
             y: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
@@ -58,29 +50,22 @@ const AnimatedScrollArrow: React.FC<{ targetRef: React.RefObject<HTMLDivElement>
     </AnimatePresence>
   );
 };
-// -----------------------------------------------------------
 
-// --- NEW: Temporary Notification Component (POSITION MODIFIED) ---
 const Notification: React.FC<{ message: string }> = ({ message }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: -50, scale: 0.9 }} // Initial position is up
+            initial={{ opacity: 0, y: -50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -50, scale: 0.9 }} // Exit position is up
+            exit={{ opacity: 0, y: -50, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            // --- MODIFIED POSITIONING CLASSES ---
-            // top-5 left-1/2 -translate-x-1/2 centers it at the top
-            className="fixed top-5 left-1/2 -translate-x-1/2 p-4 bg-green-600 text-white rounded-xl shadow-2xl z-[70] flex items-center gap-2 font-semibold"
+            className="fixed top-5 left-1/2 -translate-x-1/2 w-[90%] max-w-sm p-4 bg-green-600 text-white rounded-xl shadow-2xl z-[70] flex items-center justify-center gap-2 font-semibold text-sm sm:text-base text-center"
         >
-            <Check size={20} />
+            <Check size={20} className="flex-shrink-0" />
             {message}
         </motion.div>
     );
 };
-// ---------------------------------------------
 
-
-// Define a mapping for the refs
 const viewRefs = {
   chat: 'chat',
   about: 'about',
@@ -88,23 +73,16 @@ const viewRefs = {
   contact: 'contact',
 } as const;
 
-// --- NEW: Action mapping for the chat bot command ---
 const ACTION_MAP: Record<string, View> = {
     'SCROLL_TO_CONTACT': 'contact',
 };
-// ----------------------------------------------------
-
 
 export default function Portfolio() {
   const [activeView, setActiveView] = useState<View>('chat');
   const [scrolled, setScrolled] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); 
-  
-  // --- NEW STATE for Notification ---
   const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
-  // ------------------------------------
 
-  // --- Refs for each section ---
   const chatRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
@@ -116,36 +94,27 @@ export default function Portfolio() {
     projects: projectsRef,
     contact: contactRef,
   };
-  // ----------------------------------
 
-  // --- FIX: Scroll to top on mount to counteract unwanted initial scrolling ---
   useEffect(() => {
-    // Check if running client-side before trying to access window
     if (typeof window !== 'undefined') {
       window.scrollTo(0, 0);
     }
-  }, []); // Run only once on mount
-  // -------------------------------------------------------------------------
+  }, []);
 
-
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle Mouse Move for Spotlight Effect
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
   
-  // --- IntersectionObserver Logic (Using corrected rootMargin) ---
   useEffect(() => {
     const observerOptions: IntersectionObserverInit = {
-      root: null, // viewport
-      // Using -50px margin from the top to detect when a new section passes the navigation bar
+      root: null,
       rootMargin: '-50px 0px 0px 0px', 
       threshold: 0.1, 
     };
@@ -167,10 +136,7 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, [sectionRefs]);
 
-
-  // Update setActiveView to scroll to the section instead of switching
   const handleSetActiveView = useCallback((view: View) => {
-    // FIX: Using the same offset logic as the scroll arrow for consistent scrolling
     const targetElement = sectionRefs[view].current;
     const HEADER_HEIGHT = 128; 
 
@@ -180,32 +146,25 @@ export default function Portfolio() {
       
       window.scrollTo({
         top: scrollPosition,
-        // The scrolling speed is controlled by the browser's default 'smooth' behavior
         behavior: 'smooth' 
       });
       
-      // --- NEW: Trigger Notification after scrolling completes (approx 700ms) ---
-      // NOTE: There is no native promise for scroll-to-end. We use a short delay.
       if (view === 'contact') {
           setTimeout(() => {
               setNotificationMessage("Here you go! Contact form is ready.");
-              // Clear the notification after a few seconds
               setTimeout(() => setNotificationMessage(null), 3000); 
-          }, 700); // Wait for the scroll to finish
+          }, 700);
       }
-      // -------------------------------------------------------------------------
     }
 
   }, [sectionRefs]);
   
-  // --- NEW: Action Handler for Chat Bot ---
   const handleChatAction = useCallback((action: string) => {
       const targetView = ACTION_MAP[action];
       if (targetView) {
           handleSetActiveView(targetView);
       }
   }, [handleSetActiveView]);
-  // ------------------------------------------
 
   const sectionVariants = {
     hidden: { opacity: 0, y: 100 },
@@ -235,32 +194,27 @@ export default function Portfolio() {
         }}
       />
 
-      {/* --- NAVIGATION --- */}
       <Navigation 
         scrolled={scrolled} 
         activeView={activeView} 
         setActiveView={handleSetActiveView}
       />
 
-      {/* --- SCROLL ARROW (Fixed Positioned) --- */}
       <AnimatedScrollArrow 
         targetRef={aboutRef} 
         active={activeView === 'chat'} 
       />
 
-      <main className="pt-16 pb-20 px-6 max-w-4xl mx-auto flex flex-col relative z-10"> 
+      <main className="pt-16 pb-20 px-4 sm:px-6 max-w-4xl mx-auto flex flex-col relative z-10"> 
         
-        {/* Chat Section */}
         <section 
           ref={chatRef} 
           id="chat" 
           className="min-h-screen pt-10 relative"
         >
-          {/* PASS THE ACTION HANDLER */}
           <ChatSection onAction={handleChatAction} /> 
         </section>
 
-        {/* Apply scroll animation to the subsequent sections */}
         <motion.section 
           ref={aboutRef} 
           id="about" 
@@ -299,13 +253,10 @@ export default function Portfolio() {
 
       </main>
 
-      {/* --- NEW: Notification Display (Now fixed to the top) --- */}
       <AnimatePresence>
         {notificationMessage && <Notification message={notificationMessage} />}
       </AnimatePresence>
-      {/* ----------------------------------- */}
 
-      {/* Footer */}
       <footer className="text-center py-8 text-xs text-gray-600 border-t border-white/5 relative z-10">
         <p>© {new Date().getFullYear()}  {PROFILE.full_name} • All rights reserved.</p>
       </footer>

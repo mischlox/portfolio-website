@@ -1,10 +1,11 @@
+// components/Views/ProjectsSection.tsx
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Code, Github, ChevronLeft, ChevronRight, Layers, X, Maximize, Youtube } from 'lucide-react';
+import { ArrowUpRight, Code, Github, ChevronLeft, ChevronRight, X, Maximize, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import { PROFILE } from '../Common/Data';
 
-// Define Project and GalleryImage types based on the updated structure
 type GalleryImage = { path: string; desc: string; };
 type ProjectType = typeof PROFILE.projects[0] & {
   titleImage?: string; 
@@ -13,7 +14,6 @@ type ProjectType = typeof PROFILE.projects[0] & {
   huggingfaceUrl?: string;
 };
 
-// --- ProjectGalleryModal Component (Kept as is for context) ---
 interface ProjectGalleryModalProps {
   project: ProjectType;
   onClose: () => void;
@@ -21,13 +21,11 @@ interface ProjectGalleryModalProps {
 
 const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // Use the new galleryImages key
   const gallery = project.galleryImages; 
 
   if (!gallery || gallery.length === 0) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
         <div className="bg-[#0F0F0F] p-8 rounded-xl shadow-2xl max-w-lg w-full text-center border border-white/10">
           <p className="text-gray-300 mb-4">No gallery images available for **{project.title}**.</p>
           <button
@@ -68,7 +66,6 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
   };
 
   return (
-    // Backdrop click handler for closing
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
       onClick={onClose}
@@ -79,29 +76,24 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
         animate="visible"
         exit="hidden"
         variants={modalVariants}
-        className="relative bg-[#111111] m-4 md:m-8 rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-5xl w-full h-[90vh] flex flex-col border border-white/10"
-        // Stop propagation to prevent backdrop close on internal clicks
+        className="relative bg-[#111111] m-4 md:m-8 rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-5xl w-full h-[85vh] md:h-[90vh] flex flex-col border border-white/10"
         onClick={(e) => e.stopPropagation()} 
       >
-        {/* Modal Header/Title and Close Button */}
         <div className="flex items-center justify-between p-4 border-b border-white/5">
-          <h4 className="text-xl font-bold text-white tracking-tight">{project.title} Gallery</h4>
+          <h4 className="text-lg md:text-xl font-bold text-white tracking-tight truncate pr-4">{project.title} Gallery</h4>
           <div className="flex items-center gap-2">
             <X 
               size={24} 
               onClick={onClose}
               className="text-gray-400 hover:text-white cursor-pointer transition-colors p-1 rounded-full hover:bg-white/5"
-              aria-label="Close gallery"
             />
           </div>
         </div>
 
-        {/* Modal Body: Image and Description */}
         <div className="flex-1 overflow-hidden relative">
           <div className="h-full flex flex-col md:flex-row">
             
-            {/* Image Viewer (Left/Top) */}
-            <div className="relative w-full md:w-3/4 bg-black/40 overflow-hidden flex items-center justify-center p-4">
+            <div className="relative w-full h-1/2 md:h-full md:w-3/4 bg-black/40 overflow-hidden flex items-center justify-center p-4">
                <AnimatePresence initial={false} mode="wait">
                   <motion.div
                      key={currentImageIndex}
@@ -112,7 +104,6 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
                      className="w-full h-full relative"
                   >
                      <Image
-                        // Use currentImage.path
                         src={currentImage.path}
                         alt={currentImage.desc || 'Gallery Image'}
                         fill
@@ -122,45 +113,39 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
                   </motion.div>
                </AnimatePresence>
 
-               {/* Navigation Buttons (Absolute) */}
                <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all shadow-xl"
-                  aria-label="Previous image"
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all shadow-xl"
                >
                   <ChevronLeft size={20} />
                </button>
                <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all shadow-xl"
-                  aria-label="Next image"
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all shadow-xl"
                >
                   <ChevronRight size={20} />
                </button>
             </div>
 
-            {/* Description/Thumbnail Strip (Right/Bottom) */}
-            <div className="w-full md:w-1/4 p-6 overflow-y-auto border-t md:border-t-0 md:border-l border-white/5">
-              <h5 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+            <div className="w-full h-1/2 md:h-full md:w-1/4 p-4 md:p-6 overflow-y-auto border-t md:border-t-0 md:border-l border-white/5 bg-[#111111]">
+              <h5 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 md:mb-4">
                  Image {currentImageIndex + 1} of {gallery.length}
               </h5>
               
-              <div className="mb-6">
+              <div className="mb-4 md:mb-6">
                 <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-wrap">
                   {currentImage.desc || "A detailed view of the project interface or feature."}
                 </p>
               </div>
 
-              {/* Thumbnails */}
-              <div className="flex flex-row md:flex-col gap-3">
+              <div className="flex flex-row md:flex-col gap-3 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
                  {gallery.map((item, index) => (
                     <div 
                        key={index} 
                        onClick={() => setCurrentImageIndex(index)}
-                       className={`relative w-20 h-20 md:w-full md:h-24 rounded-lg overflow-hidden cursor-pointer transition-all ${index === currentImageIndex ? 'ring-2 ring-blue-500 scale-[1.02]' : 'opacity-70 hover:opacity-100'}`}
+                       className={`relative w-20 h-20 md:w-full md:h-24 flex-shrink-0 rounded-lg overflow-hidden cursor-pointer transition-all ${index === currentImageIndex ? 'ring-2 ring-blue-500 scale-[1.02]' : 'opacity-70 hover:opacity-100'}`}
                     >
                        <Image
-                          // Use item.path
                           src={item.path}
                           alt={item.desc || 'Thumbnail'}
                           fill
@@ -176,10 +161,7 @@ const ProjectGalleryModal: React.FC<ProjectGalleryModalProps> = ({ project, onCl
     </div>
   );
 };
-// --- END ProjectGalleryModal Component ---
 
-
-// Animation variants for the slide effect
 const variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 100 : -100,
@@ -200,103 +182,79 @@ const variants = {
   })
 };
 
-const AUTO_SCROLL_DELAY = 6000; // 6 seconds for slow auto-scroll
+const AUTO_SCROLL_DELAY = 6000;
 
 export const ProjectsSection: React.FC = () => {
-  // state: [current page index, direction of movement]
   const [[page, direction], setPage] = useState([0, 0]);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  // NEW: State to track if the mouse is hovering over the carousel
   const [isHovering, setIsHovering] = useState(false);
   
-  const projects = PROFILE.projects as ProjectType[]; // Cast to ProjectType array
+  const projects = PROFILE.projects as ProjectType[];
 
-  // Calculate current index with wrapping (infinite loop)
   const projectIndex = ((page % projects.length) + projects.length) % projects.length;
   const currentProject = projects[projectIndex];
   
-  // Check for gallery availability using the new key
   const hasGallery = !!currentProject.galleryImages && currentProject.galleryImages.length > 0;
-  
-  // Check if there is a main image
   const hasTitleImage = !!currentProject.titleImage;
 
-
   const paginate = (newDirection: number) => {
-    // Only allow pagination if the gallery is not open
     if (!isGalleryOpen) {
       setPage([page + newDirection, newDirection]);
     }
   };
   
-  // Auto-scrolling useEffect
   useEffect(() => {
-    // Only start timer if gallery is closed AND NOT hovering
     if (isGalleryOpen || isHovering) return; 
 
     const timer = setInterval(() => {
-      // Auto-scroll forward (direction 1)
       paginate(1); 
     }, AUTO_SCROLL_DELAY);
 
-    // Cleanup interval on component unmount or when dependencies change
     return () => clearInterval(timer);
-  }, [page, projects.length, isGalleryOpen, isHovering]); // ADDED: isHovering dependency
+  }, [page, projects.length, isGalleryOpen, isHovering]);
 
-  // Function to open the gallery safely
   const openGallery = () => {
     if (hasGallery) {
         setIsGalleryOpen(true);
     }
   };
 
-  // Function to close the gallery
   const closeGallery = () => setIsGalleryOpen(false);
-
 
   return (
     <>
       <div className="flex flex-col h-full justify-center">
 
-        {/* Header - Simplified to just the main title */}
-        <div className="p-10 flex justify-start items-end mb-8 md:mb-12">
+        <div className="px-4 py-8 md:p-10 flex justify-start items-end mb-4 md:mb-12">
           <div>
-            <h3 className="md:text-6xl font-bold tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
-              My Project Portfolio
+            <h3 className="text-4xl md:text-6xl font-bold tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+              My Portfolio
             </h3>
           </div>
         </div>
 
-        {/* Carousel Container */}
         <div 
-          className={`relative h-[600px] w-full overflow-hidden rounded-3xl bg-black/20 border border-white/5 shadow-2xl group ${isGalleryOpen ? 'pointer-events-none' : ''}`}
-          // NEW: Add mouse event handlers
+          className={`relative h-auto md:h-[600px] min-h-[500px] w-full overflow-hidden rounded-3xl bg-black/20 border border-white/5 shadow-2xl group ${isGalleryOpen ? 'pointer-events-none' : ''}`}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
 
-            {/* 2. NEW PROJECT INDEX BADGE (Top Right) */}
             <div className="absolute top-0 right-0 z-30 m-4 px-4 py-1 bg-white/10 text-white/80 text-xs font-semibold rounded-full tracking-wider shadow-lg">
                 Project {projectIndex + 1} of {projects.length}
             </div>
 
-          {/* Absolute Navigation Buttons (Left/Right) */}
-          <div className="absolute inset-0 z-20 flex items-center justify-between pointer-events-none">
-            {/* Left Button */}
+          <div className="absolute inset-0 z-20 hidden md:flex items-center justify-between pointer-events-none">
             <button
               onClick={() => paginate(-1)}
               className="p-4 ml-4 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 pointer-events-auto shadow-xl"
-              aria-label="Previous project"
               disabled={isGalleryOpen}
             >
               <ChevronLeft size={24} />
             </button>
 
-            {/* Right Button */}
             <button
               onClick={() => paginate(1)}
               className="p-4 mr-4 rounded-full bg-black/50 border border-white/10 text-white/80 hover:bg-black/80 transition-all opacity-0 group-hover:opacity-100 pointer-events-auto shadow-xl"
-              aria-label="Next project"
               disabled={isGalleryOpen}
             >
               <ChevronRight size={24} />
@@ -315,25 +273,22 @@ export const ProjectsSection: React.FC = () => {
                 x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.2 }
               }}
-              className="absolute inset-0 flex flex-col md:flex-row"
+              className="relative md:absolute inset-0 flex flex-col md:flex-row h-full"
             >
 
-              {/* --- LEFT: Image (Conditional Rendering) --- */}
               {hasTitleImage && (
                 <div
                   onClick={openGallery}
-                  className={`w-full md:w-1/2 h-64 md:h-full relative bg-black/20 border-b md:border-b-0 md:border-r border-white/5 overflow-hidden group ${hasGallery ? 'cursor-pointer' : ''}`}
+                  className={`w-full h-48 sm:h-64 md:h-full md:w-1/2 relative bg-black/20 border-b md:border-b-0 md:border-r border-white/5 overflow-hidden group ${hasGallery ? 'cursor-pointer' : ''}`}
                 >
                    <div className="relative w-full h-full">
                      <Image
                        src={currentProject.titleImage!}
                        alt={currentProject.title}
                        fill
-                       className="object-contain transition-transform duration-700 group-hover:scale-105"
+                       className="object-cover md:object-contain transition-transform duration-700 group-hover:scale-105"
                      />
-                     {/* Overlay Gradient */}
                      <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-transparent to-transparent md:hidden" />
-                     {/* Hover/Click Indicator (Only show if gallery available) */}
                      {hasGallery && (
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                            <Maximize size={48} className="text-white opacity-80" />
@@ -342,14 +297,11 @@ export const ProjectsSection: React.FC = () => {
                    </div>
                 </div>
               )}
-              {/* --- END LEFT: Image --- */}
 
               <div 
-                // Dynamic width: md:w-full if no image, md:w-1/2 if image is present
-                className={`w-full ${hasTitleImage ? 'md:w-1/2' : 'md:w-full'} p-10 md:p-8 flex flex-col justify-center relative`}
+                className={`w-full ${hasTitleImage ? 'md:w-1/2' : 'md:w-full'} p-6 md:p-10 flex flex-col justify-center relative bg-[#050505] md:bg-transparent`}
               >
 
-                {/* Category Tag */}
                 <div className="flex items-center gap-2 mb-4">
                    <span className="h-px w-8 bg-blue-500"></span>
                    <span className="text-xs font-bold tracking-widest text-blue-400 uppercase">
@@ -357,18 +309,15 @@ export const ProjectsSection: React.FC = () => {
                    </span>
                 </div>
 
-                {/* Title */}
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 md:mb-6 leading-tight">
                   {currentProject.title}
                 </h2>
 
-                {/* Description */}
-                <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
+                <p className="text-gray-400 text-sm md:text-lg leading-relaxed mb-6 md:mb-8">
                   {currentProject.desc}
                 </p>
 
-                {/* Tech Stack Labels */}
-                <div className="mb-8">
+                <div className="mb-6 md:mb-8">
                   <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Technologies</h4>
                   <div className="flex flex-wrap gap-2">
                     {currentProject.techStack?.map((tech, i) => (
@@ -382,52 +331,47 @@ export const ProjectsSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Github Button */}
                 <div className="mt-auto pt-6 border-t border-white/5">
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-3">
 
-                    {/* 1. GitHub Button (existing logic) */}
                     {currentProject.url ? (
                       <a
                         href={currentProject.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-6 py-3 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-500 transition-all group w-fit shadow-lg shadow-blue-900/20"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-500 transition-all group w-full sm:w-auto justify-center text-sm md:text-base shadow-lg shadow-blue-900/20"
                       >
-                        <Github size={20} />
-                        <span>View Project on GitHub</span>
-                        <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
+                        <Github size={18} />
+                        <span>GitHub</span>
+                        <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
                       </a>
                     ) : (
                        <div className="inline-flex items-center gap-2 text-gray-500 text-sm cursor-not-allowed px-4 py-2 border border-white/5 rounded-xl">
-                          <Code size={16} /> Source Code Unavailable
+                          <Code size={16} /> Code N/A
                        </div>
                     )}
 
-                    {/* 2. YouTube Button */}
                     {currentProject.youtubeUrl && (
                       <a
                         href={currentProject.youtubeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-6 py-3 bg-red-800 text-white font-bold rounded-xl hover:bg-red-500 transition-all group w-fit shadow-lg shadow-red-900/20"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-red-800 text-white font-bold rounded-xl hover:bg-red-500 transition-all group w-full sm:w-auto justify-center text-sm md:text-base shadow-lg shadow-red-900/20"
                       >
-                        <Youtube size={15} />
-                        <span>Watch Live Demo</span>
+                        <Youtube size={18} />
+                        <span>Demo</span>
                         <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
                       </a>
                     )}
-                    {/* 3. Hugging Face/Test Out Button (NEW) */}
                     {currentProject.huggingfaceUrl && (
                       <a
                         href={currentProject.huggingfaceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        // Using yellow/amber color scheme for distinction
-                        className="inline-flex items-center gap-3 px-6 py-3 bg-amber-600 text-white font-bold rounded-xl hover:bg-amber-500 transition-all group w-fit shadow-lg shadow-amber-900/20"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 md:px-6 md:py-3 bg-amber-600 text-white font-bold rounded-xl hover:bg-amber-500 transition-all group w-full sm:w-auto justify-center text-sm md:text-base shadow-lg shadow-amber-900/20"
                       >
-                        <Code size={15} /> 
-                        <span>Test Out Live Model</span>
+                        <Code size={18} /> 
+                        <span>Try Live</span>
                         <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
                       </a>
                     )}
@@ -439,7 +383,6 @@ export const ProjectsSection: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {/* Mobile Navigation Indicators (Dots) */}
         <div className="flex justify-center gap-2 mt-6">
           {projects.map((_, i) => (
             <button
@@ -453,7 +396,6 @@ export const ProjectsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Project Gallery Modal */}
       <AnimatePresence>
         {isGalleryOpen && currentProject && (
           <ProjectGalleryModal project={currentProject} onClose={closeGallery} />

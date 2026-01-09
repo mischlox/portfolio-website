@@ -2,21 +2,17 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Sparkles, Terminal, Github } from 'lucide-react'; // ADDED Github
+import { ArrowUpRight, Sparkles, Github } from 'lucide-react';
 import Image from 'next/image';
 import { PROFILE } from '../Common/Data';
 import { RotatingText } from './RotatingText';
-import { useChatBot, Message } from '../../hooks/useChatBot'; 
+import { useChatBot } from '../../hooks/useChatBot'; 
 
-// Define the required props for ChatSection
 interface ChatSectionProps {
     onAction: (action: string) => void;
 }
 
-// Update the component signature to accept the onAction prop
 export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
-  
-  // CRITICAL FIX: Pass the onAction prop directly to useChatBot
   const { 
     messages, 
     input, 
@@ -27,7 +23,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  // FIX: Scroll only the container, preventing window scroll
   useEffect(() => {
     if (messagesContainerRef.current) {
       const { scrollHeight, clientHeight } = messagesContainerRef.current;
@@ -38,34 +33,30 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
     }
   }, [messages, isTyping]);
   
-  // FIX: Ensure form submission doesn't trigger default browser scrolling/refresh
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSend(e);
   };
 
   return (
-    // MODIFIED: Changed h-[90vh] back to h-full (to size to content) and justify-center to justify-start to push content to the top
-    <div className="flex flex-col h-full justify-start items-center"> 
+    <div className="flex flex-col min-h-full justify-start items-center px-4 sm:px-0 pb-12 overflow-y-auto"> 
       
-      {/* Header Intro */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        // ADDED mt-10 and removed mb-8 (using mb-4 on image div for spacing)
-        className="text-center mt-10" 
+        className="text-center" 
       >
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <Image
             src="/profile-picture.jpg"
             alt={PROFILE.full_name}
-            width={200}
-            height={200}
-            className="rounded-full mx-auto shadow-lg"
+            width={160}
+            height={160}
+            className="rounded-full mx-auto shadow-lg w-32 h-32 md:w-48 md:h-48 object-cover"
           />
         </div>
-        <h1 className="text-2xl md:text tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+        <h1 className="text-xl md:text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
           Hey, I'm {PROFILE.first_name}
         </h1>
         <RotatingText 
@@ -76,38 +67,35 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
             "Embedded Developer",
             "Agentic AI Enthusiast"
           ]}
-          className="text-4xl md:text-6xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500"
+          // MODIFIED: ONLY pass the text styling (gradient/clipping) classes here.
+          // The size/weight/margin/min-height will be handled internally by RotatingText.
+          className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500"
         />
-        <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-3xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-2 mb-6 max-w-3xl mx-auto mt-10">
           {["Computer Vision", "Deep Learning", "Embedded Systems", "C++", "Python", "Agentic AI"].map((label) => (
             <div 
               key={label}
-              className="px-3 py-1 text-xs font-medium text-blue-300 bg-white/10 border border-white/10 rounded-full transition-all hover:scale-[1.02] hover:bg-white/10 cursor-default"            >
+              className="px-3 py-1 text-[10px] md:text-xs font-medium text-blue-300 bg-white/10 border border-white/10 rounded-full transition-all hover:scale-[1.02] hover:bg-white/10 cursor-default"            >
               {label}
             </div>
           ))}
         </div>
       </motion.div>
       
-      {/* --- ADDED TITLE ABOVE CHAT WINDOW --- */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        className="text-lg md:text-xl font-medium text-gray-400 mb-4 flex items-center gap-2"
+        className="text-base md:text-xl font-medium text-gray-400 mb-4 flex items-center gap-2 text-center"
       >
-        <Sparkles size={20} className="text-blue-400" /> 
+        <Sparkles size={16} className="text-blue-400 md:w-5 md:h-5" /> 
         Ask my AI Assistant anything about my career
       </motion.p>
-      {/* ------------------------------------- */}
 
-      {/* --- THE CHAT WINDOW --- */}
       <motion.div 
         layout
-        // INCREASED width and height
-        className="w-full max-w-3xl bg-black/40 backdrop-blur-md border border-white/10 rounded-4xl overflow-hidden shadow-2xl flex flex-col h-[400px] relative ring-1 ring-white/5" 
+        className="w-full max-w-3xl bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl md:rounded-4xl overflow-hidden shadow-2xl flex flex-col h-[380px] md:h-[450px] relative ring-1 ring-white/5" 
       >
-        {/* Decorative Top Bar */}
         <div className="h-12 bg-white/5 border-b border-white/5 flex items-center px-4 gap-2">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
@@ -115,7 +103,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
             <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
           </div>
           
-          {/* 3. NEW: "Online" status with animation */}
           <div className="ml-auto text-xs font-mono text-green-400 flex items-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -125,10 +112,9 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
           </div>
         </div>
 
-        {/* Messages Area */}
         <div 
           ref={messagesContainerRef}
-          className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-gray-800"
+          className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 scrollbar-thin scrollbar-thumb-gray-800"
         >
           {messages.map((m, i) => (
             <motion.div 
@@ -137,7 +123,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-[85%] px-5 py-3.5 whitespace-pre-line rounded-2xl text-[14px] leading-relaxed shadow-lg backdrop-blur-sm ${
+              <div className={`max-w-[85%] px-4 py-3 md:px-5 md:py-3.5 whitespace-pre-line rounded-2xl text-xs md:text-sm leading-relaxed shadow-lg backdrop-blur-sm ${
                 m.role === 'user' 
                   ? 'bg-blue-600 text-white rounded-br-sm' 
                   : 'bg-[#1a1a1a]/80 text-gray-100 border border-white/10 rounded-bl-sm'
@@ -158,34 +144,32 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
           )}
         </div>
 
-        {/* Input Area */}
-        <div className="p-4 bg-black/20 border-t border-white/10 backdrop-blur-lg">
-          <form onSubmit={onSubmit} className="relative flex items-center gap-3">
+        <div className="p-3 md:p-4 bg-black/20 border-t border-white/10 backdrop-blur-lg">
+          <form onSubmit={onSubmit} className="relative flex items-center gap-2 md:gap-3">
             <div className="absolute left-4 text-blue-500">
               <Sparkles size={18} />
             </div>
             <input 
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask anything about my experience..."
-              className="w-full bg-[#0a0a0a] text-white pl-11 pr-12 py-4 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-gray-600 text-sm font-medium shadow-inner"
+              placeholder="Ask anything..."
+              className="w-full bg-[#0a0a0a] text-white pl-10 md:pl-11 pr-12 py-3 md:py-4 rounded-xl border border-white/10 focus:outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-gray-600 text-sm font-medium shadow-inner"
               autoFocus
             />
             <button 
               type="submit"
               disabled={!input.trim()}
-              className="absolute right-3 p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all disabled:opacity-0 disabled:scale-75 shadow-lg shadow-blue-900/20"
+              className="absolute right-2 md:right-3 p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all disabled:opacity-0 disabled:scale-75 shadow-lg shadow-blue-900/20"
             >
-              <ArrowUpRight size={20} />
+              <ArrowUpRight size={18} />
             </button>
           </form>
-          {/* Quick Chips */}
-          <div className="flex gap-2 mt-3 justify-center overflow-x-auto no-scrollbar">
+          <div className="flex gap-2 mt-3 justify-start md:justify-center overflow-x-auto no-scrollbar pb-1 md:pb-0">
             {["Experience", "Tech Stack", "Contact"].map((chip) => (
               <button
                 key={chip}
                 onClick={() => setInput(`Tell me about your ${chip}`)}
-                className="px-3 py-1 text-xs font-medium text-gray-500 bg-white/5 border border-white/5 rounded-full hover:bg-white/10 hover:text-white hover:border-white/20 transition-all whitespace-nowrap"
+                className="px-3 py-1 text-[10px] md:text-xs font-medium text-gray-500 bg-white/5 border border-white/5 rounded-full hover:bg-white/10 hover:text-white hover:border-white/20 transition-all whitespace-nowrap flex-shrink-0"
               >
                 {chip}
               </button>
@@ -194,7 +178,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
         </div>
       </motion.div>
 
-      {/* --- ADDED REPO LINK BELOW CHAT WINDOW --- */}
       <motion.a
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -202,13 +185,12 @@ export const ChatSection: React.FC<ChatSectionProps> = ({ onAction }) => {
         href="https://github.com/mischlox/portfolio-website/tree/master/backend"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-100 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white transition-all shadow-md"
+        className="mt-4 flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-medium text-gray-100 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white transition-all shadow-md text-center"
       >
         <Github size={16} />
         Check out the code for this assistant on GitHub
         <ArrowUpRight size={14} />
       </motion.a>
-      {/* ------------------------------------------- */}
 
     </div>
   );

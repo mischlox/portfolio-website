@@ -1,11 +1,11 @@
 // components/Layout/Navigation.tsx
 
-'use client'; // Ensure this component is marked as a Client Component
+'use client'; 
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { NavItems, PROFILE, View } from '../Common/Data';
-import { Sparkles, User, Code, Mail } from 'lucide-react'; // Import icons here
+import { Sparkles, User, Code, Mail, Menu, X } from 'lucide-react'; 
 
 interface NavigationProps {
   scrolled: boolean;
@@ -13,7 +13,6 @@ interface NavigationProps {
   setActiveView: (view: View) => void;
 }
 
-// Map the string name to the actual component
 const IconMap: { [key: string]: React.ElementType } = {
   Sparkles,
   User,
@@ -23,7 +22,7 @@ const IconMap: { [key: string]: React.ElementType } = {
 
 const NavTab = ({ label, view, current, set, iconName }: { label: string, view: View, current: View, set: (view: View) => void, iconName: string }) => {
   const active = current === view;
-  const Icon = IconMap[iconName]; // Get the component using the string name
+  const Icon = IconMap[iconName];
 
   return (
     <button
@@ -39,7 +38,6 @@ const NavTab = ({ label, view, current, set, iconName }: { label: string, view: 
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       )}
-      {/* Render the icon component with props */}
       {Icon && <Icon size={18} className={active ? 'text-black' : 'text-gray-600'} />} 
       {label}
     </button>
@@ -47,18 +45,25 @@ const NavTab = ({ label, view, current, set, iconName }: { label: string, view: 
 };
 
 export const Navigation: React.FC<NavigationProps> = ({ scrolled, activeView, setActiveView }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [activeView]);
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${
-      scrolled ? 'bg-black/70 backdrop-blur-xl border-white/10 py-4 shadow-2xl' : 'bg-transparent border-transparent py-6'
+      scrolled || isMobileMenuOpen ? 'bg-black/80 backdrop-blur-xl border-white/10 py-4 shadow-2xl' : 'bg-transparent border-transparent py-6'
     }`}>
-      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between relative">
         <div 
           onClick={() => setActiveView('chat')}
-          className="flex items-center gap-2 text-lg font-bold tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 text-lg font-bold tracking-tight cursor-pointer hover:opacity-80 transition-opacity z-50 relative"
         >
           {PROFILE.full_name} | Software Engineer
         </div>
 
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/5 backdrop-blur-md shadow-lg">
           {NavItems.map(item => (
             <NavTab 
@@ -67,12 +72,52 @@ export const Navigation: React.FC<NavigationProps> = ({ scrolled, activeView, se
               view={item.view} 
               current={activeView} 
               set={setActiveView} 
-              iconName={item.iconName} // Pass the string name
+              iconName={item.iconName} 
             />
           ))}
         </div>
         
-        <button className="md:hidden text-sm text-gray-400">Menu</button>
+        {/* Mobile Toggle Button */}
+        <button 
+          className="md:hidden text-white p-2 z-50 relative"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="absolute top-full left-0 right-0 bg-black/95 border-b border-white/10 backdrop-blur-xl overflow-hidden md:hidden shadow-2xl"
+            >
+              <div className="flex flex-col p-6 space-y-4">
+                {NavItems.map(item => {
+                  const Icon = IconMap[item.iconName];
+                  const isActive = activeView === item.view;
+                  
+                  return (
+                    <button
+                      key={item.view}
+                      onClick={() => setActiveView(item.view)}
+                      className={`flex items-center gap-4 text-lg font-medium p-4 rounded-xl transition-all ${
+                        isActive 
+                          ? 'bg-white text-black' 
+                          : 'text-gray-400 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      {Icon && <Icon size={20} />}
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
